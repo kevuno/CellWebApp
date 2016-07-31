@@ -63,3 +63,7 @@ Route::delete('/vendedores/{vendedor}', function(Vendedor $vendedor){
     return redirect('/vendedores');
 
 });
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
