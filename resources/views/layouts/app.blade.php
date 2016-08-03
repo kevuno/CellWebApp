@@ -47,7 +47,7 @@
 											<li><a href="{{ url('/home') }}">Inicio</a></li>
 											<li><a href="{{ url('/vendedores') }}">Inventario</a></li>
 											<li><a href="{{ url('/vendedores') }}">Vendedores</a></li>
-											<li><a href="{{ url('/vendedores') }}">Otro menus</a></li>
+											<li><a href="{{ url('/vendedores') }}">Menu</a></li>
 									</ul>
 
 									<!-- Right Side Of Navbar -->
