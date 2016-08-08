@@ -1,11 +1,17 @@
 <?php
 
 namespace App;
-
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    /*
+    *Use Entrust within the User model
+    */
+    use EntrustUserTrait;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,4 +29,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    protected $menus =['1','2','3' ];
 }

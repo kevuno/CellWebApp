@@ -15,7 +15,7 @@
 
 					<link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
 
-        <title>Inventarios</title>
+        <title>Manager de F2</title>
 				<html lang="en">
 
 
@@ -37,7 +37,7 @@
 
 									<!-- Branding Image -->
 									<a class="navbar-brand" href="{{ url('/') }}">
-											Control de Inventarios
+											Manager F2
 									</a>
 							</div>
 
@@ -47,7 +47,7 @@
 											<li><a href="{{ url('/home') }}">Inicio</a></li>
 											<li><a href="{{ url('/vendedores') }}">Inventario</a></li>
 											<li><a href="{{ url('/vendedores') }}">Vendedores</a></li>
-											<li><a href="{{ url('/vendedores') }}">Menu</a></li>
+											<li><a href="{{ url('/menu') }}">Menu</a></li>
 									</ul>
 
 									<!-- Right Side Of Navbar -->
@@ -55,7 +55,7 @@
 											<!-- Authentication Links -->
 											@if (Auth::guest())
 													<li><a href="{{ url('/login') }}">Login</a></li>
-													<li><a href="{{ url('/register') }}">Register</a></li>
+													 <li><a href="{{ url('/register') }}">Register</a></li> 
 											@else
 													<li class="dropdown">
 															<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
