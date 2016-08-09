@@ -8,7 +8,14 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    <h2> Sesión iniciadas</h2>
+                    <p>
+                    <h3>Noticias:</h3>
+                    <br>
+                    -------
+                    </p>
+                    <a href="{{ url('/menu') }}"><button type="button" class="btn btn-default">Acceder al menú</button></a>
+
                 </div>
             </div>
         </div>

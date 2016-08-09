@@ -8,12 +8,15 @@
 				<meta name="viewport" content="width=device-width, initial-scale=1">
 				<!-- CSS And JavaScript -->
 					<!-- Fonts -->
-			    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+				    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
 					<!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-
-
-
 					<link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
+				<!--Test scripts-->
+				<style type="css">
+					.btn-margin{
+						margin: 5px,10px,10px,5px;
+					}
+				</style>
 
         <title>Manager de F2</title>
 				<html lang="en">
@@ -36,18 +39,34 @@
 									</button>
 
 									<!-- Branding Image -->
-									<a class="navbar-brand" href="{{ url('/') }}">
-											Manager F2
-									</a>
+									<div class="logo_container">
+										<a class="navbar-brand" style="padding:5px;" href="{{ url('/') }}">
+												<img src="{{URL::asset('assets/img/logo-1.png')}}" alt="Manager F2" style="max-width:100%; max-height:100%;">
+										</a>
+									</div>
 							</div>
 
 							<div class="collapse navbar-collapse" id="app-navbar-collapse">
 									<!-- Left Side Of Navbar -->
 									<ul class="nav navbar-nav">
 											<li><a href="{{ url('/home') }}">Inicio</a></li>
-											<li><a href="{{ url('/vendedores') }}">Inventario</a></li>
-											<li><a href="{{ url('/vendedores') }}">Vendedores</a></li>
 											<li><a href="{{ url('/menu') }}">Menu</a></li>
+
+												@role(["owner","admin","bodega"])
+												<li><a href="{{ url('/vendedores') }}">Inventario</a></li>
+												<li><a href="{{ url('/transferencias') }}">Transferencias</a></li>
+												@endrole
+
+												@role(["owner","admin","garantia"])
+												<li><a href="{{ url('/garantias') }}">Garantías</a></li>
+												@endrole
+
+												@role(["owner","admin","vendedor"])
+												<li><a href="{{ url('/ventas') }}">Ventas</a></li>
+												@endrole
+
+
+
 									</ul>
 
 									<!-- Right Side Of Navbar -->
@@ -55,7 +74,7 @@
 											<!-- Authentication Links -->
 											@if (Auth::guest())
 													<li><a href="{{ url('/login') }}">Login</a></li>
-													 <li><a href="{{ url('/register') }}">Register</a></li> 
+													 <li><a href="{{ url('/register') }}">Register</a></li>
 											@else
 													<li class="dropdown">
 															<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
