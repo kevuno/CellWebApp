@@ -5,14 +5,17 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading"><h4> Sesión iniciada</h4></div>
 
                 <div class="panel-body">
-                    <h2> Sesión iniciadas</h2>
-                    <p>
-                    <h3>Noticias:</h3>
+                    
+                    <h2> Hola {{Auth::user()->name}} </h2>
                     <br>
-                    -------
+                    
+                    <p>
+                        <h4>Noticias:</h4>
+                        <br>
+                        -------
                     </p>
                     <a href="{{ url('/menu') }}"><button type="button" class="btn btn-default">Acceder al menú</button></a>
 

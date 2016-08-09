@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 
 Route::get('/' , ['middleware' => 'auth', function () {
     return redirect('/home');
-    //return view('/home');
 }]);
 Route::get('/permissions' ,  function () {
 
@@ -33,7 +32,7 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::group(['prefix' => 'admin', 'middleware' => ['role:admin|owner']], function() {
         Route::get('/', 'AdminController@welcome');
-        Route::get('/manage', 'AdminController@manageUsers');
+        Route::get('/manage', 'AdminController@seeUsers');
     });
     Route::get('/home', 'HomeController@index');
 
@@ -43,6 +42,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/menu', function () {
         return view('menu');
     });
+
+
 
 
 

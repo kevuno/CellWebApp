@@ -6,10 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+//Models being used
+use App\User;
+
+
 class AdminController extends Controller
 {
-    //
-    public manageUsers(){
-        return view("admin.users")
+    //Read
+    public function seeUsers(){
+    	$users = User::orderBy('created_at', 'asc')->get();
+
+        return view("admin.users",['users' => $users]);
     }
 }
