@@ -31,5 +31,14 @@ class User extends Authenticatable
     ];
 
 
+    /*
+        Obtener la bodega a la cual pertenece este usuario
+    */
+    public function bodega()
+    {
+        return $this->belongsTo('App\Bodega');
+    }
+
+
     protected $menus =['1','2','3' ];
 }

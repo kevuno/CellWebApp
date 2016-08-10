@@ -53,7 +53,7 @@
 											<li><a href="{{ url('/menu') }}">Menu</a></li>
 
 												@role(["owner","admin","bodega"])
-												<li><a href="{{ url('/vendedores') }}">Inventario</a></li>
+												<li><a href="{{ url('/inventario') }}">Inventario</a></li>
 												<li><a href="{{ url('/transferencias') }}">Transferencias</a></li>
 												@endrole
 

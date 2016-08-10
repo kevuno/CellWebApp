@@ -12,8 +12,9 @@ use App\User;
 
 class AdminController extends Controller
 {
+    //Pagina inicio del admin de usuarios
     //Read
-    public function seeUsers(){
+    public function index(){
     	$users = User::orderBy('created_at', 'asc')->get();
 
         return view("admin.users",['users' => $users]);

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSuperAdminsTable extends Migration
+class CreateBodegasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,13 @@ class CreateSuperAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('super_admins', function (Blueprint $table) {
+        Schema::create('bodegas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->string('usuario');
-            $table->string('pass');
-            $table->string('permisos');
+            $table->string('ciudad');
+            $table->string('estado');
+            $table->string('pais');
+            $table->boolean('activa');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateSuperAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('super_admins');
+        Schema::drop('bodegas');
     }
 }

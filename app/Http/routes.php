@@ -29,11 +29,25 @@ Route::get('/permissions' ,  function () {
 Route::auth();
 
 Route::group(['middleware' => 'auth'], function (){
-
+    /*
+        Admin routes
+    */
     Route::group(['prefix' => 'admin', 'middleware' => ['role:admin|owner']], function() {
-        Route::get('/', 'AdminController@welcome');
-        Route::get('/manage', 'AdminController@seeUsers');
+        Route::get('/', 'AdminController@index');
     });
+
+    /*
+        Inventario routes
+    */
+
+    Route::group(['prefix' => 'inventario', 'middleware' => ['role:admin|owner|bodega']], function() {
+        Route::get('/', 'InventarioCRUDController@index');
+        Route::get('/agregar', 'InventarioCRUDController@agregar'); //Form
+        Route::post('/create', 'InventarioCRUDController@create'); //Form
+    });
+
+
+
     Route::get('/home', 'HomeController@index');
 
     /*
