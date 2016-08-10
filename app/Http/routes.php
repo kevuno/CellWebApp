@@ -27,7 +27,6 @@ Route::get('/permissions' ,  function () {
 });
 
 Route::auth();
-
 Route::group(['middleware' => 'auth'], function (){
     /*
         Admin routes
@@ -43,7 +42,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::group(['prefix' => 'inventario', 'middleware' => ['role:admin|owner|bodega']], function() {
         Route::get('/', 'InventarioCRUDController@index');
         Route::get('/agregar', 'InventarioCRUDController@agregar'); //Form
-        Route::post('/create', 'InventarioCRUDController@create'); //Form
+        Route::post('/create', 'InventarioCRUDController@create'); //Controller Post create
     });
 
 
@@ -56,7 +55,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/menu', function () {
         return view('menu');
     });
-
 
 
 

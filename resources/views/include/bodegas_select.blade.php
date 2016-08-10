@@ -1,4 +1,4 @@
-<!-- resources/views/bodegas/bodegas_select.blade.php -->
+<!-- resources/views/include/bodegas_select.blade.php -->
 
 <select class="form-control" name="bodega" id="bodega">
 	@foreach($bodegas as $bodega)

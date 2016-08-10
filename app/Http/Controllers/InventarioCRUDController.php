@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+//Para el objeto de las validaciones
+use Validator;
 
 //Para las fechas
 use Carbon;
@@ -25,11 +27,11 @@ class InventarioCRUDController extends Controller
     //Read
     public function index(){
 
-    	//$users = User::orderBy('created_at', 'asc')->get();
+    	$inventarios = Inventario::orderBy('created_at', 'asc')->get();
 
         //return view("admin.users",['users' => $users]);
 
-        return view("inventario.index");
+        return view("inventario.index", ['inventarios' => $inventarios]);
     }
 
     //For for create
@@ -52,11 +54,20 @@ class InventarioCRUDController extends Controller
     public function create(Request $request){
     	// Validate
     	//TODO: Change to Form Request validation
-        $this->validate($request, [
-            'imei' => 'bail|required|digits:10',
+
+        $validator = Validator::make($request->all(), [
+            'imei' => 'required|digits:10',
             'marca' => 'required',
             'modelo' => 'required',
+            'precio_minimo' => 'required',
+            'precio_maximo' => 'required',
         ]);
+        if ($validator->fails()) {
+            return redirect('inventario/agregar')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         //Create object
         
         $inventario = new Inventario;        

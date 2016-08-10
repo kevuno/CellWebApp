@@ -20,12 +20,29 @@
 						<div class="row">
 							<div class="col-lg-12">
 									<h3>Lista actual</h3>
-									<table class="table">
+									<table class="table table-striped">
 											<thead>
-												<th>Nombre</th>
-												<th>Rol</th>
-												<th>Acción</th>
+												<th>Id</th>
+												<th>IMEI</th>
+												<th>Marca</th>
+												<th>Modelo</th>
+												<th>Bodega</th>
+												<th>Precio Mínimo</th>
+												<th>Precio Máximo</th>
 											</thead>
+											<tbody>
+												@foreach($inventarios  as $inventario)
+													<tr>
+														<td>{{$inventario->id}}</td>
+														<td>{{$inventario->imei}}</td>
+														<td>{{$inventario->marca}}</td>
+														<td>{{$inventario->modelo}}</td>
+														<td>{{$inventario->bodega->nombre}}</td>
+														<td>{{$inventario->precio_min}}</td>
+														<td>{{$inventario->precio_max}}</td>													
+													</tr>
+												@endforeach
+											</tbody>
 									</table>
 							</div>
 						</div>
