@@ -11,7 +11,7 @@
 	@include('include.form_errors')
 	<div class="row">
 		<div class="col-lg-12">
-			<form class="form-horizontal" action="{{ url('inventario/create')}} "  method="post">
+			<form class="form-horizontal" action="{{ url('inventario/agrupado')}} "  method="post">
 				{{ csrf_field() }}
 				<div class="form-group">
 					<label for="imei" class="col-sm-2 control-label">IMEI</label>

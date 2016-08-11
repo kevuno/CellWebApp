@@ -8,9 +8,10 @@
                 <div class="panel-heading"><h4> Sesión iniciada</h4></div>
 
                 <div class="panel-body">
-                    
+                    <div class="row">
                     <h2> Hola {{Auth::user()->name}} </h2>
-                    <br>
+                    <h3> Bodega {{Auth::user()->bodega->nombre}} </h2>
+                    </div>
                     
                     <p>
                         <h4>Noticias:</h4>

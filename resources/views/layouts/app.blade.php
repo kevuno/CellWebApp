@@ -17,6 +17,8 @@
 						margin: 5px,10px,10px,5px;
 					}
 				</style>
+				<!-- JavaScripts -->
+				<script type="text/javascript" src="{{URL::asset('assets/js/jquery.js')}}"></script>
 
         <title>Manager de F2</title>
 				<html lang="en">
@@ -102,3 +104,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 -->
+<script type="text/javascript">
+
+	//Toggle checkbox when clicking on a row that has a checkbox
+	$('.checkbox_row').click(function(event){
+		if(event.target.type !== 'checkbox'){
+			var $checkbox = $(this).find(':checkbox');
+			$checkbox.trigger('click')
+		}
+	});
+
+	//Load page with the info from the option selected
+    $('#bodega_select').change(function() {
+    	var view_type= $('#view_type').val();
+    	var bodega = $(this).find(':selected').val();
+    	if(bodega == "all"){
+    		window.location.replace("/"+ view_type+"/");	
+    	}else{
+    		window.location.replace("/"+ view_type+"/b/"+bodega);	
+    	}
+    	
+    });
+</script>
+

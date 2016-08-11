@@ -17,7 +17,8 @@
 						@role(["owner","admin","bodega"])
 						<div class="row">
 						<div class="col-md-12 col-sm-6" style="margin:10px;"><a href="{{ url('/inventario') }}"><button type="button" class="btn btn-primary">Inventario </button></a><br/></div>
-						<div class="col-md-12 col-sm-6" style="margin:10px;"><a href="{{ url('/transferencias') }}"><button type="button" class="btn btn-danger"> Transferencias </button></a><br/></div>
+						<div class="col-md-12 col-sm-6" style="margin:10px;"><a href="{{ url('/transferencias') }}"><button type="button" class="btn btn-danger"> Transferencias activas </button></a><br/></div>
+						<div class="col-md-12 col-sm-6" style="margin:10px;"><a href="{{ url('/transferenciasCompletadas') }}"><button type="button" class="btn btn-danger"> Transferencias completadas </button></a><br/></div>
 						@endrole
 
 						@role(["owner","admin","garantia"])

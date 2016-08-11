@@ -1,4 +1,5 @@
-<!-- resources/views/inventatio/index.blade.php -->
+<!-- resources/views/inventatio/agrupado.blade.php -->
+
 
 @extends('layouts.app')
 
@@ -8,15 +9,13 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h2>Inventario</h2>
-			</div>			
+			</div>		
 	        <div class="col-sm-offset-4 col-sm-8">
-	        	@role(["owner","admin"])
 	        	<div class="col-lg-4">
-	        		<!-- Javascript for the select found in views/layouts/app.blade.php-->
 	        		<form action="{{url('inventario/indexPost')}}">
 	        			<input type="hidden" id="view_type" value="inventario">
 	        			<select class="form-control" name="bodega" id="bodega_select">
-	        						<option value="all">
+	        						<option value="">
 										Todas
 									</option>
 									@foreach($bodegas as $bodega)
@@ -33,11 +32,10 @@
 						</select>
 	        		</form>
 	        	</div>
-	        	@endrole
 	        	<div class="col-lg-3">
-		        	<a href="{{url("inventario/agrupado")}}">
+		        	<a href="{{url("inventario/")}}">
 		                <button type="button" class="btn btn-default">
-		                    <i class="fa fa-object-group"></i> Ver agrupados
+		                    <i class="fa fa-object-ungroup"></i> Ver 1 por 1
 		                </button>
 		            </a>
 	        	</div>
@@ -47,8 +45,7 @@
 		                    <i class="fa fa-plus"></i> Agregar equipos
 		                </button>
 		            </a>
-	        	</div>
-            
+	        	</div>         
 	        </div>
 		</div>
 		<div class="row">
@@ -56,28 +53,28 @@
 					<h3>Lista actual</h3>
 					<table class="table table-striped">
 							<thead>
-								<th>IMEI</th>
+								<th>Cantidad</th>
 								<th>Marca</th>											
 								<th>Modelo</th>
 								<th>Estatus</th>
 								<th>Bodega</th>
 								<th>Precio Mínimo</th>
-								<th>Precio Máximo</th>
+								<th>Precio Máximo</th>								
 								<th>Acciones</th>
 							</thead>
 							<tbody>
 								
 									@foreach($inventarios  as $inventario)
 										<tr class="checkbox_row">
-											<!--<td><input type="checkbox" name="{{$inventario->id}}" value="{{$inventario->id}}"></td>-->
-											<td>{{$inventario->imei}}</td>
+	
+											<td>{{$inventario->count}}</td>
 											<td>{{$inventario->marca}}</td>
 											<td>{{$inventario->modelo}}</td>
 											<td>{{$inventario->estatus}}</td>
-											<td>{{$inventario->bodega->nombre}}</td>
+											<td>{{$inventario->bodega}}</td>
 											<td>{{$inventario->precio_min}}</td>
-											<td>{{$inventario->precio_max}}</td>
-											<td>Editar,Transferir,Garantia</td>													
+											<td>{{$inventario->precio_max}}</td>												
+											<td>Editar,Transferir,Garantia</td>														
 										</tr>
 									@endforeach
 								</form>

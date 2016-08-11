@@ -41,10 +41,27 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::group(['prefix' => 'inventario', 'middleware' => ['role:admin|owner|bodega']], function() {
         Route::get('/', 'InventarioCRUDController@index');
-        Route::get('/agregar', 'InventarioCRUDController@agregar'); //Form
-        Route::post('/create', 'InventarioCRUDController@create'); //Controller Post create
-    });
+        Route::get('/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexBodega']); //List of inventario from certain bodeg
+        Route::get('/agrupado', 'InventarioCRUDController@indexAgrupado');
 
+        Route::get('/agregar', 'InventarioCRUDController@agregar'); //Add form
+
+        Route::post('/agregar', 'InventarioCRUDController@agregarPost'); //Post create
+        Route::post('/indexPost', 'InventarioCRUDController@agregar'); //Post del acción por checkbox
+        Route::post('/editar', 'InventarioCRUDController@agregar'); //Edit edit
+    });
+    /*
+        Transferencia routes
+    */
+
+    Route::group(['prefix' => 'transferencias', 'middleware' => ['role:admin|owner|bodega']], function() {
+        Route::get('/', 'InventarioCRUDController@index');
+        Route::get('/agrupado', 'InventarioCRUDController@indexAgrupado');
+        Route::get('/agregar', 'InventarioCRUDController@agregar'); //Add form
+        Route::post('/agregarPost', 'InventarioCRUDController@agregarPost'); //Post create
+        Route::post('/indexPost', 'InventarioCRUDController@agregar'); //Post del acción por checkbox
+        Route::post('/editar', 'InventarioCRUDController@agregar'); //Edit edit
+    });
 
 
     Route::get('/home', 'HomeController@index');
