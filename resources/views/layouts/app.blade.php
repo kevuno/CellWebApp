@@ -116,13 +116,17 @@
 
 	//Load page with the info from the option selected
     $('#bodega_select').change(function() {
-    	var view_type= $('#view_type').val();
-    	var bodega = $(this).find(':selected').val();
-    	if(bodega == "all"){
-    		window.location.replace("/"+ view_type+"/");	
-    	}else{
-    		window.location.replace("/"+ view_type+"/b/"+bodega);	
+    	var view_type= $('#view_type').val(); //Hidden input to know where the form comes from
+    	if(view_type != "view_only"){
+	    	var bodega = $(this).find(':selected').val();
+	    	if(bodega == "all"){
+	    		window.location.replace("/"+ view_type+"/");	
+	    	}else{
+	    		window.location.replace("/"+ view_type+"/b/"+bodega);	
+	    	}    		
     	}
+
+
     	
     });
 </script>
