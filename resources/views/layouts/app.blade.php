@@ -67,6 +67,10 @@
 												<li><a href="{{ url('/ventas') }}">Ventas</a></li>
 												@endrole
 
+												@role(["owner","admin","vendedor","bodega","garantia"])
+												<li><a href="{{ url('/inventario') }}">Catálogo</a></li>
+												@endrole												
+
 
 
 									</ul>

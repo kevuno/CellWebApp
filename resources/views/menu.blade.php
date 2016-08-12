@@ -29,6 +29,11 @@
 						<div class="col-lg-12 col-sm-6" style="margin:10px;"><a href="{{ url('/ventas') }}"><button type="button" class="btn btn-info" style=" width:250px;"> <i class="fa fa-exchange"> </i> Ventas </button></a><br/></div>
 						@endrole
 						</div>
+
+						@role(["owner","admin","vendedor","bodega","garantia"])
+						<div class="col-lg-12 col-sm-6" style="margin:10px;"><a href="{{ url('/ventas') }}"><button type="button" class="btn btn-danger" style=" width:250px;"> <i class="fa fa-book"> </i> Catálogo </button></a><br/></div>
+						@endrole
+						</div>
 			        </div>
     			</div>
 			</div>
