@@ -56,35 +56,98 @@
             
 	        </div>
 		</div>
+		@role(["owner","admin"])
 		<div class="row">
 			<div class="col-lg-12">
-					<h3>Lista actual</h3>
-					<table class="table table-striped">
-							<thead>
-								<th>Bodega Origen</th>
-								<th>Bodega Destino</th>
-								<th>Estatus</th>
-								<th>Transferido por</th>
-								<th> Acciones </th>
-							</thead>
-							<tbody>
-								
-									@foreach($transferencias  as $transferencia)
-										<tr class="checkbox_row">
-											
-											<td>{{$transferencia->bodega_origen->nombre}}</td>
-											<td>{{$transferencia->bodega_destino->nombre}}</td>
-											<td>{{$transferencia->estatus}}</td>
-											<td>{{$transferencia->transferido_por}}</td>
-											<td>
-												<!--TODO editar, transferir y agregar a garantia multiples equipos a la vez-->
-											</td>													
-										</tr>
-									@endforeach
-								</form>
-							</tbody>
-					</table>
+				<h3>Lista de todas las transferencias</h3>
+				<table class="table table-striped">
+						<thead>
+							<th>Bodega Origen</th>
+							<th>Bodega Destino</th>
+							<th>Estatus</th>
+							<th>Transferido por</th>
+							<th> Acciones </th>
+						</thead>
+						<tbody>
+							
+								@foreach($transferencias  as $transferencia)
+									<tr class="checkbox_row">
+										
+										<td>{{$transferencia->bodega_origen->nombre}}</td>
+										<td>{{$transferencia->bodega_destino->nombre}}</td>
+										<td>{{$transferencia->estatus}}</td>
+										<td>{{$transferencia->transferido_por}}</td>
+										<td>
+											<!--TODO editar, transferir y agregar a garantia multiples equipos a la vez-->
+										</td>													
+									</tr>
+								@endforeach
+							</form>
+						</tbody>
+				</table>
 			</div>
 		</div>
+		@endrole
+		@role(["bodega"])
+		<div class="row">			 
+        	<div class="col-lg-12">
+				<h3>Transferencias para bodega {{Auth::user()->bodega->nombre}}</h3>
+        	</div>
+			<div class="col-lg-12">
+				<table class="table table-striped">
+					<thead>
+						<th>Bodega Origen</th>
+						<th>Estatus</th>
+						<th>Transferido por</th>
+						<th> Acciones </th>
+					</thead>
+					<tbody>
+						
+							@foreach($transferencias  as $transferencia)
+								<tr class="checkbox_row">									
+									<td>{{$transferencia->bodega_destino->nombre}}</td>
+									<td>{{$transferencia->estatus}}</td>
+									<td>{{$transferencia->transferido_por}}</td>
+									<td>
+										<!--TODO editar, transferir y agregar a garantia multiples equipos a la vez-->
+									</td>													
+								</tr>
+							@endforeach
+						</form>
+					</tbody>
+				</table>
+			</div>
+	    </div>
+	    <div class="row">			 
+        	<div class="col-lg-12">
+				<h3>Transferencias desde bodega {{Auth::user()->bodega->nombre}}</h3>
+        	</div>
+        	<div class="col-lg-12">
+        		<table class="table table-striped">
+					<thead>
+						<th>Bodega Origen</th>
+						<th>Estatus</th>
+						<th>Transferido por</th>
+						<th> Acciones </th>
+					</thead>
+					<tbody>						
+						@foreach($transferencias_desde  as $transferencia)
+							<tr class="checkbox_row">
+							<td>
+								{{$transferencia}}
+							</td>							
+								<td>{{$transferencia->estatus}}</td>
+								<td>{{$transferencia->transferido_por}}</td>
+								<td>
+									<!--TODO editar, transferir y agregar a garantia multiples equipos a la vez-->
+								</td>													
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+
+        	</div>
+	    </div>
+	    @endrole
 </div>
 @endsection

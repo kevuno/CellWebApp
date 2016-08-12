@@ -10,7 +10,6 @@
                 <div class="panel-body">
                     <div class="row">
                     <h2> Hola {{Auth::user()->name}} </h2>
-                    <h3> Bodega {{Auth::user()->bodega->nombre}} </h2>
                     </div>
                     
                     <p>

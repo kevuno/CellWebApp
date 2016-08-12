@@ -30,9 +30,8 @@ class TransferenciaCRUDController extends Controller
     public function create(Inventario $inventario){
 
         //Pasar la lista de bodegas
-        if(Auth::user()->hasRole(["owner","admin"])){
-            $bodegas = Bodega::orderBy('nombre','asc')->get();            
-        }
+        $bodegas = Bodega::orderBy('nombre','asc')->get();    
+        
         return view("transferencia.add",['bodegas'=>$bodegas,'inventario'=>$inventario]);
     }
 
@@ -65,12 +64,19 @@ class TransferenciaCRUDController extends Controller
             //Mostrar todas los datos si el usuario es admin o owner
             $transferencias = Transferencia::orderBy('created_at','desc')
                             ->get();
+            $transferencias_desde = $transferencias;
         }else if(Auth::user()->hasRole(["bodega"])){
             //Mostrar solo los datos de la bodega del usuario si el usuario es bodega.
             //$inventarios = Inventario::orderBy('created_at', 'asc')->get();
             $transferencias = Transferencia::where('bodega_origen','=',Auth::user()->bodega->id)
-            				->where('status','A')
+            				->where('estatus','A')
             				->orWhere('bodega_destino','=',Auth::user()->bodega->id)
+                            ->orderBy('created_at','desc')
+                            ->get();
+            //Transferencias hechas desde la bodega 
+            $transferencias_desde = Transferencia::where('bodega_origen','=',Auth::user()->bodega->id)
+            				->where('estatus','A')
+            				->orWhere('bodega_origen','=',Auth::user()->bodega->id)
                             ->orderBy('created_at','desc')
                             ->get();
         }
@@ -78,6 +84,9 @@ class TransferenciaCRUDController extends Controller
         foreach ($transferencias as $transferencia) {
         	$transferencia->bodega_origen = Bodega::find($transferencia->bodega_origen);
         	$transferencia->bodega_destino = Bodega::find($transferencia->bodega_destino);
+
+        	$transferencias_desde->bodega_origen = $transferencia->bodega_origen;
+        	$transferencias_desde->bodega_destino = $transferencia->bodega_destino;
         }
         
     	
@@ -89,7 +98,10 @@ class TransferenciaCRUDController extends Controller
             $bodegas[] = Auth::user()->bodega;
         }
 
-        return view("transferencia.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
+        return view("transferencia.index", ['transferencias' => $transferencias,
+        									'bodegas'=>$bodegas,
+        									'bodega_selected'=> "null",
+        									'transferencias_desde' => $transferencias_desde]);
     }
 
 
