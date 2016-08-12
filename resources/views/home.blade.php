@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_background')
 
 @section('content')
 <div class="container">
@@ -9,16 +9,16 @@
 
                 <div class="panel-body">
                     <div class="row">
-                    <h2> Hola {{Auth::user()->name}} </h2>
+                    <div class="col-lg-6">
+                        <h2> Hola {{Auth::user()->name}} </h2>
+                        
+                        <p>
+                            <h4>Noticias:</h4>
+                            <br>
+                            -------
+                        </p>
+                        <a href="{{ url('/menu') }}"><button type="button" class="btn btn-default">Acceder al menú</button></a>
                     </div>
-                    
-                    <p>
-                        <h4>Noticias:</h4>
-                        <br>
-                        -------
-                    </p>
-                    <a href="{{ url('/menu') }}"><button type="button" class="btn btn-default">Acceder al menú</button></a>
-
                 </div>
             </div>
         </div>

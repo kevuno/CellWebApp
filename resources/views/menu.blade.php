@@ -1,15 +1,15 @@
 
 <!-- resources/views/tasks.blade.php -->
 
-@extends('layouts.app')
+@extends('layouts.app_background')
 
 @section('content')
-<div class="container">
+<div class="container" >
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<h2>Menú</h2>
 			<div class="col-lg-12">
-				<div class="panel panel-default text-center">
+				<div class="panel panel-default text-center" style="background:none;border:none;">
 			        <div class="panel-body">
 			        		
 			        	
