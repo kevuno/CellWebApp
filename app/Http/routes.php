@@ -41,11 +41,12 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::group(['prefix' => 'inventario', 'middleware' => ['role:admin|owner|bodega']], function() {
         
-        //Crear
+        //Read
         Route::get('/', 'InventarioCRUDController@index');
         Route::get('/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexBodega']); //List of inventario from certain bodega
         Route::get('/agrupado', 'InventarioCRUDController@indexAgrupado');
         Route::get('/agrupado/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']); //List of inventario agrupado from certain bodega
+        //Create
         Route::get('/agregar', 'InventarioCRUDController@create'); //Add form        
         Route::post('/agregar', 'InventarioCRUDController@store'); //Post create
 
@@ -57,15 +58,24 @@ Route::group(['middleware' => 'auth'], function (){
         Transferencia routes
     */
 
-    Route::group(['prefix' => 'transferencias', 'middleware' => ['role:admin|owner|bodega']], function() {
-        Route::get('/', 'InventarioCRUDController@index');
-        Route::get('/agrupado', 'InventarioCRUDController@indexAgrupado');
-        Route::get('/agregar', 'InventarioCRUDController@agregar'); //Add form
-        Route::post('/agregarPost', 'InventarioCRUDController@agregarPost'); //Post create
-        Route::post('/indexPost', 'InventarioCRUDController@agregar'); //Post del acción por checkbox
-        Route::post('/editar', 'InventarioCRUDController@agregar'); //Edit edit
+    Route::group(['prefix' => 'transferencia', 'middleware' => ['role:admin|owner|bodega']], function() {
+        //Read
+        Route::get('/', 'TransferenciaCRUDController@index');
+        Route::get('/agrupado', 'TransferenciaCRUDController@indexAgrupado');
+        //Create
+        Route::get('/agregar/{inventario}', 'TransferenciaCRUDController@create'); //Add form
+        Route::post('/agregar/{inventario}', 'TransferenciaCRUDController@store'); //Post create
+        
+        
+        //Update
+        Route::get('/editar/{transferencia}', 'TransferenciaCRUDController@edit'); //Post del acción por checkbox
+        Route::put('/editar/{transferencia}', 'TransferenciaCRUDController@update'); //Edit edit
     });
 
+    Route::group(['prefix' => 'transferenciaCompletada', 'middleware' => ['role:admin|owner|bodega']], function() {
+        //Read
+        Route::get('/', 'TransferenciaCRUDController@completadas');
+    });
 
     Route::get('/home', 'HomeController@index');
 

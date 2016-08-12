@@ -33,7 +33,7 @@
 					</div>
 				</div>				
 				<div class="form-group">
-				    <label for="bodega" class="col-sm-2 control-label">Bodega</label>
+				    <label for="bodega_id" class="col-sm-2 control-label">Bodega</label>
 				    <div class="col-sm-10">
 				    	<input type="hidden" id="view_type" value="view_only">
 				    	@include('include.bodegas_select')

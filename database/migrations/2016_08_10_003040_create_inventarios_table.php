@@ -19,7 +19,7 @@ class CreateInventariosTable extends Migration
             $table->string('modelo');
             $table->string('marca');
             $table->string('bodega_id');
-            $table->date('fecha_ingreso');
+            $table->timestamp('fecha_ingreso');
             $table->string('ingresado_por');
             $table->float('precio_min');
             $table->float('precio_max');

@@ -13,4 +13,5 @@ class Transferencia extends Model
     {
         return $this->belongsTo('App\Inventario');
     }
+
 }

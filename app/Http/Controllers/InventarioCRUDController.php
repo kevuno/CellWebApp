@@ -35,8 +35,8 @@ class InventarioCRUDController extends Controller
     **/
 
 
-    //Pagina inicio del inventario con los elementos uno por uno
-    //Read
+    /**Pagina inicio del inventario con los elementos uno por uno**/
+    
     public function index(){
         if(Auth::user()->hasRole(["owner","admin"])){
             //Mostrar todas los datos si el usuario es admin o owner
@@ -61,9 +61,9 @@ class InventarioCRUDController extends Controller
         return view("inventario.index", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
     }
 
-    //Pagina inicio del inventario con los elementos uno por uno especificando una bodega.
-    //Solo los admins pueden ver una bodega en especifico
-    //Read
+    /**Pagina inicio del inventario con los elementos uno por uno especificando una bodega.
+        Solo los admins pueden usar esta funcion**/
+    
     public function indexBodega($bodega){
 
 
@@ -82,8 +82,7 @@ class InventarioCRUDController extends Controller
     }
 
 
-    //Pagina inicio del inventario con los elementos agrupados
-    //Read
+    /**Pagina inicio del inventario con los elementos agrupados**/
     public function indexAgrupado(){
 
 
@@ -122,8 +121,7 @@ class InventarioCRUDController extends Controller
         return view("inventario.agrupado", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
     }
 
-    //Pagina inicio del inventario con los elementos agrupados de una bodega especificada
-    //Read
+    /**Pagina inicio del inventario con los elementos agrupados de una bodega especificada**/
     public function indexAgrupadoBodega($bodega){
 
 
@@ -206,16 +204,11 @@ class InventarioCRUDController extends Controller
         }
 
         //Create object
-        $inventario = new Inventario;        
-        $inventario -> imei = $request -> imei;
-        $inventario -> marca = $request -> marca;
-        $inventario -> modelo = $request -> modelo;
+
+        $inventario = new Inventario($request->all());       
         $inventario -> estatus = "I"; //en inventario
-        $inventario -> bodega_id = $request -> bodega;
         $inventario -> fecha_ingreso = Carbon\Carbon::now();
         $inventario -> ingresado_por = Auth::user()->name;
-        $inventario -> precio_min = $request -> precio_min;
-        $inventario -> precio_max = $request -> precio_max;
         $inventario -> save();
 
         // Response
@@ -240,7 +233,7 @@ class InventarioCRUDController extends Controller
         }else{
             $bodegas[] = Auth::user()->bodega;
         }
-        return view("inventario.editar",['bodegas'=>$bodegas],['inventario'=>$inventario]);
+        return view("inventario.editar",['bodegas'=>$bodegas,'inventario'=>$inventario]);
     }
 
     //Upadte the especified inventario
@@ -275,7 +268,6 @@ class InventarioCRUDController extends Controller
         $inventario -> precio_min = $request -> precio_min;
         $inventario -> precio_max = $request -> precio_max;
         $inventario -> save();
-
         // Response
 
         //Inventario::create($request->all());
