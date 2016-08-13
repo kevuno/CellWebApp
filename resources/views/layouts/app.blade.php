@@ -1,4 +1,5 @@
 <!-- resources/views/layouts/app.blade.php -->
+<!--This is the app template with normal white background -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +20,12 @@
 				</style>
 				<!-- JavaScripts -->
 				<script type="text/javascript" src="{{URL::asset('assets/js/jquery.js')}}"></script>
+				<script type="text/javascript" src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
+				<script src="cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+				<!--Datatables css-->
+        		<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+
 
         <title>Manager de F2</title>
 				<html lang="en">
@@ -101,13 +108,14 @@
     </body>
 </html>
 
-<!-- JavaScripts -->
-<script type="text/javascript" src="{{URL::asset('assets/js/jquery.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-<!-- CDNS
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
--->
+		<!-- jQuery -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- DataTables -->
+        <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
 <script type="text/javascript">
 
 	//Toggle checkbox when clicking on a row that has a checkbox

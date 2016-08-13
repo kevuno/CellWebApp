@@ -19,6 +19,9 @@ use App\Inventario;
 //Para poder usar el objeto de las transferencias
 use App\Transferencia;
 
+//para poder usar el datatables
+use Datatables;
+
 class TransferenciaCRUDController extends Controller
 {
     
@@ -131,6 +134,17 @@ class TransferenciaCRUDController extends Controller
         }
 
         return view("inventario.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
+    }
+
+
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function anyData()
+    {
+        return Datatables::of(Transferencia::query())->make(true);
     }
 
 

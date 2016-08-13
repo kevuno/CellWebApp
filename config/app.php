@@ -163,6 +163,11 @@ return [
          */
         Zizaco\Entrust\EntrustServiceProvider::class,
 
+        /*
+        * Datatables
+        */
+        Yajra\Datatables\DatatablesServiceProvider::class,
+
 
     ],
 
@@ -210,6 +215,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 

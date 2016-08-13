@@ -60,7 +60,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h3>Lista de todas las transferencias</h3>
-				<table class="table table-striped">
+				<table id="tabla" class="table table-striped">
 						<thead>
 							<th>Bodega Origen</th>
 							<th>Bodega Destino</th>
@@ -94,7 +94,7 @@
 				<h3>Transferencias para bodega {{Auth::user()->bodega->nombre}}</h3>
         	</div>
 			<div class="col-lg-12">
-				<table class="table table-striped">
+				<table id="tabla" class="table table-striped">
 					<thead>
 						<th>Bodega Origen</th>
 						<th>Estatus</th>
@@ -123,7 +123,7 @@
 				<h3>Transferencias desde bodega {{Auth::user()->bodega->nombre}}</h3>
         	</div>
         	<div class="col-lg-12">
-        		<table class="table table-striped">
+        		<table id="tabla" class="table table-striped">
 					<thead>
 						<th>Bodega Origen</th>
 						<th>Estatus</th>
@@ -150,4 +150,10 @@
 	    </div>
 	    @endrole
 </div>
+<script type="text/javascript">	
+	$(document).ready(function() {
+		console.log("ASDads");
+    	$('#tabla').DataTable();
+} );
+</script>
 @endsection

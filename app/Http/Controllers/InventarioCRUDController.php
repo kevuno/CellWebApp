@@ -26,6 +26,10 @@ use App\Inventario;
 use App\Role;
 
 
+//para poder usar el datatables
+use Datatables;
+
+
 
 class InventarioCRUDController extends Controller
 {
