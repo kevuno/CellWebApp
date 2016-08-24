@@ -152,7 +152,6 @@
 </div>
 <script type="text/javascript">	
 	$(document).ready(function() {
-		console.log("ASDads");
     	$('#tabla').DataTable();
 } );
 </script>

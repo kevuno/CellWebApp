@@ -53,7 +53,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 					<h3>Lista actual</h3>
-					<table class="table table-striped">
+					<table id="tabla" class="table table-striped">
 							<thead>
 								<th>Cantidad</th>
 								<th>Marca</th>											
@@ -89,4 +89,9 @@
 			</div>
 		</div>
 </div>
+<script type="text/javascript">	
+	$(document).ready(function() {
+    	$('#tabla').DataTable();
+} );
+</script>
 @endsection

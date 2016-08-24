@@ -168,6 +168,11 @@ return [
         */
         Yajra\Datatables\DatatablesServiceProvider::class,
 
+        /*
+        * Reverse seeder
+        */
+        Orangehill\Iseed\IseedServiceProvider::class,
+
 
     ],
 
