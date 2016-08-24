@@ -38,5 +38,12 @@ class DatabaseSeeder extends Seeder
             
         ]);
 
+        $this->call('InventariosTableSeeder');
+        $this->call('BodegasTableSeeder');
+        $this->call('GarantiasTableSeeder');
+        $this->call('MigrationsTableSeeder');
+        $this->call('RolesTableSeeder');
+        $this->call('RoleUserTableSeeder');
+        $this->call('TransferenciasTableSeeder');
     }
 }

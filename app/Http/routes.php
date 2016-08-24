@@ -59,8 +59,15 @@ Route::group(['middleware' => 'auth'], function (){
     */
 
     Route::group(['prefix' => 'transferencia', 'middleware' => ['role:admin|owner|bodega']], function() {
-        //Read
-        Route::get('/', 'TransferenciaCRUDController@index');
+
+        
+        
+        //Menu
+        Route::get('/', 'TransferenciaCRUDController@menu');
+        //Lista
+        Route::get('/lista', 'TransferenciaCRUDController@index');
+
+
         Route::get('/agrupado', 'TransferenciaCRUDController@indexAgrupado');
         //Create
         Route::get('/agregar/{inventario}', 'TransferenciaCRUDController@create'); //Add form

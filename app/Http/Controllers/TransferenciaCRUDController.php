@@ -24,6 +24,17 @@ use Datatables;
 
 class TransferenciaCRUDController extends Controller
 {
+    /**
+        *MENU   
+    **/
+
+    /** Form for create **/
+    public function menu(){
+        
+        return view("transferencia.menu");
+    }
+
+
     
     /**
         *CREATE   
