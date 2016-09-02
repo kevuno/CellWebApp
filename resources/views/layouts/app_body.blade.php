@@ -1,4 +1,4 @@
-<!-- resources/views/layouts/app.blade.php -->
+<!-- resources/views/layouts/app_body.blade.php -->
  <nav class="navbar navbar-inverse navbar-static-top">
 	<div class="container">
 			<div class="navbar-header">

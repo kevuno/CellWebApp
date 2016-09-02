@@ -66,7 +66,7 @@ class InventarioCRUDController extends Controller
     }
 
     /**Pagina inicio del inventario con los elementos uno por uno especificando una bodega.
-        Solo los admins pueden usar esta funcion**/
+        Solo los admins pueden usar esta funcion
     
     public function indexBodega($bodega){
 
@@ -84,6 +84,46 @@ class InventarioCRUDController extends Controller
 
         return view("inventario.index", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega]);
     }
+    **/
+
+    public function indexBodega(Request $request){
+        /**
+        *  Request $request: Informacion del id de la bodega de la cual se obtendra el inventario.
+        *  Si $request ->id es = "all", la sql sera obtener la info de todas las bodegas.
+        **/
+
+        $bodega_id = $request->id;
+
+        //Inventario de todas las bodegas
+        if($bodega_id == "all"){
+            //Inventario de una bodega en especifico
+            $inventarios = Inventario::orderBy('created_at','desc')->get();            
+        }else{
+            $inventarios = Inventario::where('bodega_id','=',$bodega_id)->orderBy('created_at','desc')->get();
+        }
+        
+
+        //Pasar la lista de bodegas
+        if(Auth::user()->hasRole(["owner","admin"])){
+            $bodegas = Bodega::orderBy('nombre','asc')->get();
+
+        }else if(Auth::user()->hasRole(["bodega"])){
+            $bodegas[] = Auth::user()->bodega;
+        }
+
+        if ($request->ajax()) {
+            return   view("inventario.index_content", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega_id]);
+            
+        }
+        return view("inventario.index", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega]);
+    }
+    
+
+
+
+
+
+
 
 
     /**Pagina inicio del inventario con los elementos agrupados**/

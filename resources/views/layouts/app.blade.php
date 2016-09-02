@@ -3,7 +3,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+	<head>
+		<meta name="_token" content="{!! csrf_token() !!}"/>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,33 +22,26 @@
 		<!-- JavaScripts -->
 		<script type="text/javascript" src="{{URL::asset('assets/js/jquery.js')}}"></script>
 		<script type="text/javascript" src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-		<script src="cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
 		<!--Datatables css-->
 		<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
 
-<title>Manager de F2</title>
-		<html lang="en">
+	<title>Manager de F2</title>
 
 
 
-</head>
+	</head>
 <body>
 @include("layouts.app_body")	
 @yield('content')
 </body>
    
 </html>
+		
 
-		<!-- jQuery -->
-        <script src="//code.jquery.com/jquery.js"></script>
-        <!-- DataTables -->
-        <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-        <!-- Bootstrap JavaScript -->
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-
+<!--
 <script type="text/javascript">
 
 	//Toggle checkbox when clicking on a row that has a checkbox
@@ -58,20 +52,13 @@
 		}
 	});
 
-	//Load page with the info from the option selected
-    $('#bodega_select').change(function() {
-    	var view_type= $('#view_type').val(); //Hidden input to know where the form comes from
-    	if(view_type != "view_only"){
-	    	var bodega = $(this).find(':selected').val();
-	    	if(bodega == "all"){
-	    		window.location.replace("/"+ view_type+"/");	
-	    	}else{
-	    		window.location.replace("/"+ view_type+"/b/"+bodega);	
-	    	}    		
-    	}
 
-
-    	
-    });
 </script>
+-->
 
+
+<script type="text/javascript">
+$.ajaxSetup({
+   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+});
+</script>
