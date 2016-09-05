@@ -19,7 +19,7 @@ $('#bodega_select').change(function(e) {
 
 function loadInfoFromBodega(Bodegaid,url) {
 
-    console.log(url);
+    //console.log(url);
     $.ajax({
         type: "POST",
         url: url,
