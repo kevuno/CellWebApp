@@ -9,13 +9,15 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h2>Inventario</h2>
-			</div>		
+			</div>
+		</div>
+		<div class="row">
 	        <div class="col-sm-offset-4 col-sm-8">
 	        	@role(["owner","admin"])
 	        	<div class="col-lg-4">
-	        		<form action="{{url('inventario/indexPost')}}">
-	        			<input type="hidden" id="view_type" value="inventario/agrupado">
-	        			<select class="form-control" name="bodega" id="bodega_select">
+	        		<form>
+	        			<!-- name atribute of select will be the url of the ajax for the select -->
+	        			<select class="form-control" name="agrupado" id="bodega_select">
 	        						<option value="all">
 										Todas
 									</option>
@@ -37,7 +39,7 @@
 	        	<div class="col-lg-3">
 		        	<a href="{{url("inventario/")}}">
 		                <button type="button" class="btn btn-default">
-		                    <i class="fa fa-object-ungroup"></i> Ver 1 por 1
+		                     <i class="fa fa-object-ungroup"></i> Ver 1 por 1
 		                </button>
 		            </a>
 	        	</div>
@@ -50,48 +52,9 @@
 	        	</div>         
 	        </div>
 		</div>
-		<div class="row">
-			<div class="col-lg-12">
-					<h3>Lista actual</h3>
-					<table id="tabla" class="table table-striped">
-							<thead>
-								<th>Cantidad</th>
-								<th>Marca</th>											
-								<th>Modelo</th>
-								<th>Estatus</th>
-								<th>Bodega</th>
-								<th>Precio Mínimo</th>
-								<th>Precio Máximo</th>								
-								<th>Acciones</th>
-							</thead>
-							<tbody>
-								
-									@foreach($inventarios  as $inventario)
-										<tr class="checkbox_row">
-	
-											<td>{{$inventario->count}}</td>
-											<td>{{$inventario->marca}}</td>
-											<td>{{$inventario->modelo}}</td>
-											<td>{{$inventario->estatus}}</td>
-											<td>{{$inventario->bodega}}</td>
-											<td>{{$inventario->precio_min}}</td>
-											<td>{{$inventario->precio_max}}</td>												
-											<td>
-												<a href="{{url('inventario/editar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></button>
-												<a href="{{url('transferencia/agregar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-truck"></i></button>
-												<a href="{{url('garantia/agregar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-medkit"></i></button>
-											</td>														
-										</tr>
-									@endforeach
-								</form>
-							</tbody>
-					</table>
-			</div>
-		</div>
+
+
+		@include("inventario.agrupado_content")
+		
 </div>
-<script type="text/javascript">	
-	$(document).ready(function() {
-    	$('#tabla').DataTable();
-} );
-</script>
 @endsection

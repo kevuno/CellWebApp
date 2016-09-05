@@ -19,8 +19,8 @@
 	        	<div class="col-lg-4">
 	        		<!-- Javascript for the select found in views/layouts/app.blade.php-->
 	        		<form>
-	        			<input type="hidden" id="view_type" value="inventario">
-	        			<select class="form-control" name="bodega" id="bodega_select">
+	        			<!-- name atribute of select will be the url of the ajax for the select -->
+	        			<select class="form-control" name="inventario" id="bodega_select">
     						<option value="all">
 								Todas
 							</option>
@@ -52,8 +52,7 @@
 		                    <i class="fa fa-plus"></i> Agregar equipos
 		                </button>
 		            </a>
-	        	</div>
-            
+	        	</div>            
 	        </div>
 		</div>		
 		@include("inventario.index_content")

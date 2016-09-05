@@ -45,8 +45,11 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('/', 'InventarioCRUDController@index');
         Route::post('/', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexBodega']);
         //Route::get('/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexBodega']); //List of inventario from certain bodega
+        
         Route::get('/agrupado', 'InventarioCRUDController@indexAgrupado');
-        Route::get('/agrupado/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']); //List of inventario agrupado from certain bodega
+        Route::post('/agrupado', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']); //List of inventario agrupado from certain bodega
+        //Route::get('/agrupado/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']); //List of inventario agrupado from certain bodega
+        
         //Create
         Route::get('/agregar', 'InventarioCRUDController@create'); //Add form        
         Route::post('/agregar', 'InventarioCRUDController@store'); //Post create

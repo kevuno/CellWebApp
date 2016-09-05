@@ -6,18 +6,23 @@ Every time the js loads, the clicked will be reseted to false.
 var clicked = false;
 $('#bodega_select').change(function(e) {
 	if (!clicked){
-		console.log("EXECUTED");
 		e.preventDefault();
 		clicked = true;
-		loadInfoFromBodega($(this).find(':selected').val());
+
+        var bodega_id = $(this).find(':selected').val();
+        var url = $(this).attr('name');
+
+		loadInfoFromBodega(bodega_id,url);
 
 	}	
 });
 
-function loadInfoFromBodega(Bodegaid) {
+function loadInfoFromBodega(Bodegaid,url) {
+
+    console.log(url);
     $.ajax({
         type: "POST",
-        url: 'inventario/',
+        url: url,
         data: {'id': Bodegaid},
         success: function(data) {
         	console.log(data);
@@ -26,7 +31,7 @@ function loadInfoFromBodega(Bodegaid) {
         },
         error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
         	$('body').hide().html(jqXHR.responseText).fadeIn();
-	        console.log(JSON.stringify(jqXHR)[0]);
+	        console.log(JSON.stringify(jqXHR));
 	        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
     	}
     });

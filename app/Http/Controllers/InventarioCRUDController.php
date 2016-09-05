@@ -46,12 +46,6 @@ class InventarioCRUDController extends Controller
             //Mostrar todas los datos si el usuario es admin o owner
             $inventarios = Inventario::orderBy('created_at','desc')
                             ->get();
-        }else if(Auth::user()->hasRole(["bodega"])){
-            //Mostrar solo los datos de la bodega del usuario si el usuario es bodega.
-            //$inventarios = Inventario::orderBy('created_at', 'asc')->get();
-            $inventarios = Inventario::where('bodega_id','=',Auth::user()->bodega->id)
-                            ->orderBy('created_at','desc')
-                            ->get();
         }
     	
 
@@ -94,11 +88,12 @@ class InventarioCRUDController extends Controller
 
         $bodega_id = $request->id;
 
-        //Inventario de todas las bodegas
+        
         if($bodega_id == "all"){
-            //Inventario de una bodega en especifico
+            //Inventario de todas las bodegas
             $inventarios = Inventario::orderBy('created_at','desc')->get();            
         }else{
+            //Inventario de una bodega en especifico
             $inventarios = Inventario::where('bodega_id','=',$bodega_id)->orderBy('created_at','desc')->get();
         }
         
@@ -111,13 +106,14 @@ class InventarioCRUDController extends Controller
             $bodegas[] = Auth::user()->bodega;
         }
 
+        //El request de este controlador normalemente sera json puesto que esta siendo cargado dinmaicamente,
+        // pero aun asi va a cargar una vista
         if ($request->ajax()) {
             return   view("inventario.index_content", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega_id]);
             
         }
-        return view("inventario.index", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega]);
-    }
-    
+        return "error";
+    }   
 
 
 
@@ -129,22 +125,10 @@ class InventarioCRUDController extends Controller
     /**Pagina inicio del inventario con los elementos agrupados**/
     public function indexAgrupado(){
 
-
-
         if(Auth::user()->hasRole(["owner","admin"])){
             //Mostrar todas los datos si el usuario es admin o owner
             $inventarios = DB::table('inventarios')
                          ->select(DB::raw('*,count(id) as count'))
-                         ->groupBy('marca')
-                         ->groupBy('modelo')
-                         ->groupBy('bodega_id')
-                         ->get();
-        }else if(Auth::user()->hasRole(["bodega"])){
-            //Mostrar solo los datos de la bodega del usuario si el usuario es bodega.
-            //$inventarios = Inventario::orderBy('created_at', 'asc')->get();
-            $inventarios = DB::table('inventarios')
-                         ->select(DB::raw('*,count(id) as count'))
-                         ->where('bodega_id','=',Auth::user()->bodega->id)
                          ->groupBy('marca')
                          ->groupBy('modelo')
                          ->groupBy('bodega_id')
@@ -165,31 +149,35 @@ class InventarioCRUDController extends Controller
         return view("inventario.agrupado", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
     }
 
-    /**Pagina inicio del inventario con los elementos agrupados de una bodega especificada**/
-    public function indexAgrupadoBodega($bodega){
+    /**Pagina inicio del inventario con los elementos agrupados de una bodega especifica**/
+    public function indexAgrupadoBodega(Request $request){
+
+        $bodega_id = $request->id;
 
 
-
-        if(Auth::user()->hasRole(["owner","admin"])){
-            //Mostrar todas los datos si el usuario es admin o owner
+        
+        if($bodega_id == "all"){
+            //Inventario de todas las bodegas
             $inventarios = DB::table('inventarios')
                          ->select(DB::raw('*,count(id) as count'))
-                         ->where('bodega_id','=',$bodega)
+                         ->groupBy('marca')
+                         ->groupBy('modelo')
+                         ->groupBy('bodega_id')
+                         ->get(); 
+
+
+        }else{
+            //Inventario de una bodega en especifico
+            $inventarios = DB::table('inventarios')
+                         ->select(DB::raw('*,count(id) as count'))
+                         ->where('bodega_id','=',$bodega_id)
                          ->groupBy('marca')
                          ->groupBy('modelo')
                          ->groupBy('bodega_id')
                          ->get();
-        }else if(Auth::user()->hasRole(["bodega"])){
-            //Mostrar solo los datos de la bodega del usuario si el usuario es bodega.
-            //$inventarios = Inventario::orderBy('created_at', 'asc')->get();
-            $inventarios = DB::table('inventarios')
-                         ->select(DB::raw('*,count(id) as count'))
-                         ->where('bodega_id','=',Auth::user()->bodega->id)
-                         ->groupBy('marca')
-                         ->groupBy('modelo')
-                         ->groupBy('bodega_id')
-                         ->get();
+            
         }
+
         //Asignar el nombre de la bodega a los resultados puesto que no son objectos del inventario sino un array de objectos de la tabla.
         foreach ($inventarios as $inventario) {
             //Encontrar el objeto en la base de datos con el id que tiene el array del inventario, sacar el nombre y asignarlo como bodega al $inventario.
@@ -202,7 +190,7 @@ class InventarioCRUDController extends Controller
             $bodegas[] = Auth::user()->bodega;
         }
 
-        return view("inventario.agrupado", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> $bodega]);
+        return view("inventario.agrupado_content", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> $bodega_id]);
     }
 
 
