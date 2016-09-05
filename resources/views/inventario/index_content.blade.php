@@ -10,6 +10,8 @@
 					<th>Modelo</th>
 					<th>Estatus</th>
 					<th>Bodega</th>
+					<th>Fecha de adición</th>
+					<th>Fecha de modificacion</th>
 					<th>Precio Mínimo</th>
 					<th>Precio Máximo</th>
 					<th>Acciones</th>
@@ -24,6 +26,8 @@
 								<td>{{$inventario->modelo}}</td>
 								<td>{{$inventario->estatus}}</td>
 								<td>{{$inventario->bodega->nombre}}</td>
+								<td>{{$inventario->fecha_ingreso}}</td>
+								<td>{{$inventario->updated_at}}</td>								
 								<td>{{$inventario->precio_min}}</td>
 								<td>{{$inventario->precio_max}}</td>
 								<td>

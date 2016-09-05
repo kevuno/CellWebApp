@@ -49,7 +49,14 @@
 		                    <i class="fa fa-plus"></i> Agregar equipos
 		                </button>
 		            </a>
-	        	</div>         
+	        	</div>
+	        	<div class="col-lg-3">
+		        	<a href="{{url("inventario/agregar_csv")}}">
+		                <button type="button" class="btn btn-default">
+		                    <i class="fa fa-plus"></i> Agregar usando archivo .csv 
+		                </button>
+		            </a>
+	        	</div>  	        	         
 	        </div>
 		</div>
 

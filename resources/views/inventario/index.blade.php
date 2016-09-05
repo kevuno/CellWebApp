@@ -14,9 +14,9 @@
 			<div class="col-lg-4">				
 				@include('include.form_success')
 			</div>			
-	        <div class="col-sm-offset-4 col-sm-8">
+	        <div class=" col-sm-12">
 	        	@role(["owner","admin"])
-	        	<div class="col-lg-4">
+	        	<div class="col-lg-2">
 	        		<!-- Javascript for the select found in views/layouts/app.blade.php-->
 	        		<form>
 	        			<!-- name atribute of select will be the url of the ajax for the select -->
@@ -39,7 +39,7 @@
 	        		</form>
 	        	</div>
 	        	@endrole
-	        	<div class="col-lg-3">
+	        	<div class="col-lg-2">
 		        	<a href="{{url("inventario/agrupado")}}">
 		                <button type="button" class="btn btn-default">
 		                    <i class="fa fa-object-group"></i> Ver agrupados
@@ -47,12 +47,28 @@
 		            </a>
 	        	</div>
 	        	<div class="col-lg-3">
-		        	<a href="{{url("inventario/agregar")}}">
+		        	<a href="{{url("inventario/agregar_mult")}}">
 		                <button type="button" class="btn btn-default">
-		                    <i class="fa fa-plus"></i> Agregar equipos
+		                    <i class="fa fa-plus"></i> Agregar multiples equipos
 		                </button>
 		            </a>
-	        	</div>            
+	        	</div>
+	        	<div class="col-lg-3">
+		        	<a href="{{url("inventario/agregar_csv")}}">
+		                <button type="button" class="btn btn-default">
+		                    <i class="fa fa-plus"></i> Agregar usando archivo .csv 
+		                </button>
+		            </a>
+	        	</div>	        		        	
+	        	<div class="col-lg-2">
+		        	<a href="{{url("inventario/agregar")}}">
+		                <button type="button" class="btn btn-default">
+		                    <i class="fa fa-plus"></i> Agregar 1 equipo
+		                </button>
+		            </a>
+	        	</div>
+
+	        	                 
 	        </div>
 		</div>		
 		@include("inventario.index_content")

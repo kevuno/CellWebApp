@@ -51,8 +51,14 @@ Route::group(['middleware' => 'auth'], function (){
         //Route::get('/agrupado/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']); //List of inventario agrupado from certain bodega
         
         //Create
-        Route::get('/agregar', 'InventarioCRUDController@create'); //Add form        
-        Route::post('/agregar', 'InventarioCRUDController@store'); //Post create
+            //1 by 1
+            Route::get('/agregar', 'InventarioCRUDController@create'); //Add form        
+            Route::post('/agregar', 'InventarioCRUDController@store'); //Post create
+
+            //Usando archivo de .csv
+            Route::get('/agregar_csv', 'InventarioCRUDController@create_csv'); //Add form        
+            Route::post('/agregar_csv', 'InventarioCRUDController@store_csv'); //Post create
+
 
         //Editar
         Route::get('/editar/{inventario}', 'InventarioCRUDController@edit'); //Post del acción por checkbox

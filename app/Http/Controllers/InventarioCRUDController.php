@@ -34,6 +34,17 @@ use Datatables;
 class InventarioCRUDController extends Controller
 {
 
+    /**RULES for csv file**/
+    public function csv_rules()
+    {
+        return [
+          'name'        => 'required',
+          'sku'         => 'required|unique:products,sku,' . $this->get('id'),
+          'image'       => 'required|mimes:png'
+        ];
+    }
+
+
     /**
         * READ
     **/
@@ -117,11 +128,6 @@ class InventarioCRUDController extends Controller
 
 
 
-
-
-
-
-
     /**Pagina inicio del inventario con los elementos agrupados**/
     public function indexAgrupado(){
 
@@ -196,7 +202,6 @@ class InventarioCRUDController extends Controller
 
 
 
-
     /**
         *CREATE   
     **/
@@ -249,6 +254,86 @@ class InventarioCRUDController extends Controller
         return redirect('/inventario')
                         ->with('success','Elemento fue agregado al inventario satisfactoriamente');
     }
+
+
+
+
+    //Form for create using csv file
+    public function create_csv(){
+
+        //Pasar la lista de bodegas
+        if(Auth::user()->hasRole(["owner","admin"])){
+            $bodegas = Bodega::orderBy('nombre','asc')->get();            
+        }else{
+            $bodegas[] = Auth::user()->bodega;
+        }
+        return view("inventario.add_csv",['bodegas'=>$bodegas]);
+    }
+
+
+
+    //POST of the form for storing a new inventario using a csv file
+    public function store_csv(Request $request){
+        // Validate file type
+        $validator = Validator::make($request->all(), [
+            'file' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect('inventario/agregar_csv')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        if($request->file('file')->getClientMimeType() != "application/vnd.ms-excel"){
+            return redirect('inventario/agregar_csv')
+                        ->withErrors(['Archivo no es de tipo csv']);
+        }
+
+
+
+        // Read .csv file and store data
+        $file = $request->file('file');
+        echo $request->file('file')->getClientMimeType();
+        $handle = fopen($file, "r");
+        $header = true;
+
+
+        $headers = [];
+        while ($csvLine = fgetcsv($handle, 1000, ",")) {
+
+            if ($header) {
+                $header = false;
+                $headers = $csvLine;
+
+
+            } else {
+                //Crear objecto de inventario
+                echo $csvLine[0];
+
+                //Create object
+                $inventario = new Inventario();
+                foreach ($headers as $key => $header_atr) {
+                    $inventario -> $header_atr = $csvLine[$key];
+                }
+                $inventario -> estatus = "I"; //en inventario
+                $inventario -> fecha_ingreso = Carbon\Carbon::now();
+                $inventario -> ingresado_por = Auth::user()->name;
+                $inventario -> save();
+
+            }
+        }
+
+        // Response
+
+        return redirect('/inventario')
+                        ->with('success','Elementos fue agregados al inventario satisfactoriamente');
+
+
+
+    }
+
+
+
+
 
 
 
