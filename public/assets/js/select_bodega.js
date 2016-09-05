@@ -25,7 +25,7 @@ function loadInfoFromBodega(Bodegaid,url) {
         url: url,
         data: {'id': Bodegaid},
         success: function(data) {
-        	console.log(data);
+        	//console.log(data);
 			$data = $(data); // the HTML content that controller has produced
             $('#table_content').hide().html($data).fadeIn();
         },
