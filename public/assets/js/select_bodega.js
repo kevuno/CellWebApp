@@ -18,8 +18,8 @@ $('#bodega_select').change(function(e) {
 });
 
 function loadInfoFromBodega(Bodegaid,url) {
-    //console.log("TESTSDASD");
-    //console.log(url);
+    console.log("TESTSDASD");
+    console.log(url);
     $.ajax({
         type: "POST",
         url: url,
