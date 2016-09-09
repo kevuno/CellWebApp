@@ -34,17 +34,6 @@ use Datatables;
 class InventarioCRUDController extends Controller
 {
 
-    /**RULES for csv file**/
-    public function csv_rules()
-    {
-        return [
-          'name'        => 'required',
-          'sku'         => 'required|unique:products,sku,' . $this->get('id'),
-          'image'       => 'required|mimes:png'
-        ];
-    }
-
-
     /**
         * READ
     **/
@@ -292,7 +281,6 @@ class InventarioCRUDController extends Controller
 
         // Read .csv file and store data
         $file = $request->file('file');
-        echo $request->file('file')->getClientMimeType();
         $handle = fopen($file, "r");
         $header = true;
 
@@ -306,14 +294,31 @@ class InventarioCRUDController extends Controller
 
 
             } else {
-                //Crear objecto de inventario
-                echo $csvLine[0];
-
                 //Create object
                 $inventario = new Inventario();
                 foreach ($headers as $key => $header_atr) {
-                    $inventario -> $header_atr = $csvLine[$key];
+                    $csvLine[$header_atr] = $csvLine[$key];
+                    unset($csvLine[$key]);             
+                    $inventario -> $header_atr = $csvLine[$header_atr];
                 }
+
+
+
+
+                $validator = Validator::make($csvLine, [
+                        'imei' => 'required|digits:10|unique:inventarios',
+                        'marca' => 'required',
+                        'modelo' => 'required',
+                        'precio_min' => 'required',
+                        'precio_max' => 'required|greater_equal_than_field:precio_min',
+                ],["greater_equal_than_field" => "El precio máximo debe ser mayor o igual al precio mínimo"]);
+                if ($validator->fails()) {
+                    return redirect('inventario/agregar_csv')
+                                ->withErrors($validator)
+                                ->with('csv_error',"Error en elemento con imei = ".$csvLine["imei"])
+                                ->withInput();
+                }
+
                 $inventario -> estatus = "I"; //en inventario
                 $inventario -> fecha_ingreso = Carbon\Carbon::now();
                 $inventario -> ingresado_por = Auth::user()->name;
@@ -321,7 +326,7 @@ class InventarioCRUDController extends Controller
 
             }
         }
-
+  
         // Response
 
         return redirect('/inventario')
@@ -385,6 +390,7 @@ class InventarioCRUDController extends Controller
         $inventario -> precio_min = $request -> precio_min;
         $inventario -> precio_max = $request -> precio_max;
         $inventario -> save();
+
         // Response
 
         //Inventario::create($request->all());

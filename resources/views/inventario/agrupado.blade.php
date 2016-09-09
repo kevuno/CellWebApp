@@ -12,31 +12,35 @@
 			</div>
 		</div>
 		<div class="row">
-	        <div class="col-sm-offset-4 col-sm-8">
+			<div class="col-lg-4">				
+				@include('include.form_success')
+			</div>			
+	        <div class=" col-sm-12">
 	        	@role(["owner","admin"])
-	        	<div class="col-lg-4">
+	        	<div class="col-lg-2">
+	        		<!-- Javascript for the select found in views/layouts/app.blade.php-->
 	        		<form>
 	        			<!-- name atribute of select will be the url of the ajax for the select -->
-	        			<select class="form-control" name="agrupado" id="bodega_select">
-	        						<option value="all">
-										Todas
-									</option>
-									@foreach($bodegas as $bodega)
-										@if ($bodega->id == $bodega_selected)
-										<option value="{{$bodega->id}}" selected >				
-											{{$bodega->nombre}}
-										</option>		
-										@else
-										<option value="{{$bodega->id}}" >
-											{{$bodega->nombre}}
-										</option>		
-										@endif
-									@endforeach
+	        			<select class="form-control" name="inventario" id="bodega_select">
+    						<option value="all">
+								Todas
+							</option>
+							@foreach($bodegas as $bodega)
+								@if ($bodega->id == $bodega_selected)
+								<option value="{{$bodega->id}}" selected >				
+									{{$bodega->nombre}}
+								</option>		
+								@else
+								<option value="{{$bodega->id}}" >
+									{{$bodega->nombre}}
+								</option>		
+								@endif
+							@endforeach
 						</select>
 	        		</form>
 	        	</div>
 	        	@endrole
-	        	<div class="col-lg-3">
+	        	<div class="col-lg-2">
 		        	<a href="{{url("inventario/")}}">
 		                <button type="button" class="btn btn-default">
 		                     <i class="fa fa-object-ungroup"></i> Ver 1 por 1
@@ -44,9 +48,9 @@
 		            </a>
 	        	</div>
 	        	<div class="col-lg-3">
-		        	<a href="{{url("inventario/agregar")}}">
+		        	<a href="{{url("inventario/agregar_mult")}}">
 		                <button type="button" class="btn btn-default">
-		                    <i class="fa fa-plus"></i> Agregar equipos
+		                    <i class="fa fa-plus"></i> Agregar multiples equipos
 		                </button>
 		            </a>
 	        	</div>
@@ -56,11 +60,16 @@
 		                    <i class="fa fa-plus"></i> Agregar usando archivo .csv 
 		                </button>
 		            </a>
-	        	</div>  	        	         
+	        	</div>	        		        	
+	        	<div class="col-lg-2">
+		        	<a href="{{url("inventario/agregar")}}">
+		                <button type="button" class="btn btn-default">
+		                    <i class="fa fa-plus"></i> Agregar 1 equipo
+		                </button>
+		            </a>
+	        	</div>	        	         
 	        </div>
 		</div>
-
-
 		@include("inventario.agrupado_content")
 		
 </div>

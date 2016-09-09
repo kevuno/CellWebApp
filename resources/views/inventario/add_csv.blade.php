@@ -9,6 +9,7 @@
 		</div>	
 	</div>
 	@include('include.form_errors')
+	@include('include.form_errors_csv')
 	<div class="row">
 		<div class="col-lg-12">
 			<form class="form-horizontal" action="{{ url('inventario/agregar_csv')}} " enctype="multipart/form-data" method="post">
