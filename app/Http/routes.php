@@ -35,11 +35,21 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('/', 'AdminController@index');
     });
 
+
+    
+
     /*
         Inventario routes
     */
 
     Route::group(['prefix' => 'inventario', 'middleware' => ['role:admin|owner|bodega']], function() {
+
+        /*
+        Helper ajax routes
+        */
+
+        Route::post('/bodegaIdToName', 'InventarioCRUDController@bodegaIdToName');
+
         
         //Read
         Route::get('/', 'InventarioCRUDController@index');
@@ -59,6 +69,13 @@ Route::group(['middleware' => 'auth'], function (){
             Route::get('/agregar_csv', 'InventarioCRUDController@create_csv'); //Add form        
             Route::post('/agregar_csv', 'InventarioCRUDController@store_csv'); //Post create
 
+            //Usando codigo de barras/ multiples equipos del mismo modelo
+            Route::get('/agregar_mult', 'InventarioCRUDController@create_mult'); //Add form        
+            Route::post('/agregar_mult', 'InventarioCRUDController@store_mult'); //Post create
+
+                //Vista de una tabla para usarla en add_mult.js
+                Route::get('/agregar_mult_InfoAndInput', 'InventarioCRUDController@agregar_mult_InfoAndInput'); //Add form      
+                Route::post('/agregar_mult_oneElement', 'InventarioCRUDController@store_mult_oneElement'); //Post create
 
         //Editar
         Route::get('/editar/{inventario}', 'InventarioCRUDController@edit'); //Post del acción por checkbox

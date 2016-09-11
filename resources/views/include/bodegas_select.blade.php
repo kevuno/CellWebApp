@@ -2,7 +2,7 @@
 <!--TODO select the bodega that belongs to the user or belongs to the item in case it was being edited-->
 <select class="form-control" name="bodega_id" id="bodega_select">
 	@foreach($bodegas as $bodega)
-			<option value="{{$bodega->id}}" selected >
+			<option value="{{$bodega->id}}">
 			{{$bodega->nombre}}
 			</option>		
 	@endforeach

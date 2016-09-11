@@ -46,6 +46,8 @@ class InventarioCRUDController extends Controller
             //Mostrar todas los datos si el usuario es admin o owner
             $inventarios = Inventario::orderBy('created_at','desc')
                             ->get();
+        }else{
+            $inventarios = Inventario::where('bodega_id','=',Auth::user()->bodega->id)->orderBy('created_at','desc')->get();
         }
     	
 
@@ -128,7 +130,18 @@ class InventarioCRUDController extends Controller
                          ->groupBy('modelo')
                          ->groupBy('bodega_id')
                          ->get();
+        }else{
+            //Inventario de una bodega en especifico
+            $inventarios = DB::table('inventarios')
+                         ->select(DB::raw('*,count(id) as count'))
+                         ->where('bodega_id','=',Auth::user()->bodega->id)
+                         ->groupBy('marca')
+                         ->groupBy('modelo')
+                         ->groupBy('bodega_id')
+                         ->get();
+            
         }
+
         //Asignar el nombre de la bodega a los resultados puesto que no son objectos del inventario sino un array de objectos de la tabla.
         foreach ($inventarios as $inventario) {
             //Encontrar el objeto en la base de datos con el id que tiene el array del inventario, sacar el nombre y asignarlo como bodega al $inventario.
@@ -288,23 +301,28 @@ class InventarioCRUDController extends Controller
         $headers = [];
         while ($csvLine = fgetcsv($handle, 1000, ",")) {
 
-            if ($header) {
+            if($header){
+                //If this is the first row, do not read the line, instead save this line as headers.
                 $header = false;
                 $headers = $csvLine;
 
 
-            } else {
+            }else{
                 //Create object
                 $inventario = new Inventario();
                 foreach ($headers as $key => $header_atr) {
                     $csvLine[$header_atr] = $csvLine[$key];
-                    unset($csvLine[$key]);             
+                    unset($csvLine[$key]);
+                    /*TODO
+                     *Check if bodega was specified in the form or if it is in the file
+                     * Only admins will be able to insert a bodega in the file, other will 
+                     */
+
                     $inventario -> $header_atr = $csvLine[$header_atr];
                 }
 
 
-
-
+                //Validate values of object
                 $validator = Validator::make($csvLine, [
                         'imei' => 'required|digits:10|unique:inventarios',
                         'marca' => 'required',
@@ -315,10 +333,11 @@ class InventarioCRUDController extends Controller
                 if ($validator->fails()) {
                     return redirect('inventario/agregar_csv')
                                 ->withErrors($validator)
-                                ->with('csv_error',"Error en elemento con imei = ".$csvLine["imei"])
+                                ->with('csv_error',"Error en equipo con imei = ".$csvLine["imei"])
                                 ->withInput();
                 }
 
+                //Save object
                 $inventario -> estatus = "I"; //en inventario
                 $inventario -> fecha_ingreso = Carbon\Carbon::now();
                 $inventario -> ingresado_por = Auth::user()->name;
@@ -337,7 +356,57 @@ class InventarioCRUDController extends Controller
     }
 
 
+    //Form for create using multiple elements (codebar scanner)
+    public function create_mult(){
 
+        //Pasar la lista de bodegas
+        if(Auth::user()->hasRole(["owner","admin"])){
+            $bodegas = Bodega::orderBy('nombre','asc')->get();            
+        }else{
+            $bodegas[] = Auth::user()->bodega;
+        }
+        return view("inventario.add_mult",['bodegas'=>$bodegas]);
+    }
+
+
+
+
+    //Return table view with the information of the form, a button and the dynamic table
+    public function agregar_mult_InfoAndInput(){
+
+        return view("inventario.add_mult_infoAndInput");
+    }
+
+
+    //POST of the form for storing a new inventario using AJAX with the codebar scanner / multiple fast insertions
+    public function store_mult_oneElement(Request $request){
+
+        // Validate
+
+        $validator = Validator::make($request->all(), [
+            'imei' => 'required|digits:10|unique:inventarios',
+            'marca' => 'required',
+            'modelo' => 'required',
+            'precio_min' => 'required',
+            'precio_max' => 'required|greater_equal_than_field:precio_min',
+        ],["greater_equal_than_field" => "El precio máximo debe ser mayor o igual al precio mínimo"]);
+        if ($validator->fails()) {
+            return ["error"=>True, "id"=> $request->imei, "errorData" => $validator->messages()->toJson()];
+        }
+ 
+        //Create object 
+
+        $inventario = new Inventario($request->all());       
+        $inventario -> estatus = "I"; //en inventario
+        $inventario -> fecha_ingreso = Carbon\Carbon::now();
+        $inventario -> ingresado_por = Auth::user()->name;
+        $inventario -> save();
+
+        // Response
+
+        //Inventario::create($request->all());
+        return $inventario;
+    }
 
 
 
@@ -397,6 +466,12 @@ class InventarioCRUDController extends Controller
         return redirect('/inventario')
                         ->with('success','Elemento del inventario fue actualizado satisfactoriamente');
     }
+
+    //Return the bodega object from the id
+    public function bodegaIdToName(Request $request){
+        return Bodega::find($request->id);
+    }
+
 
 
 }

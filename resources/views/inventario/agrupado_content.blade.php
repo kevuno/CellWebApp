@@ -41,7 +41,8 @@
 </div>
 <script type="text/javascript">	
 	$(document).ready(function() {
-    	$('#tabla').DataTable();
+    	$('#tabla').DataTable({"pageLength": 50});
+
 } );
 </script>
 

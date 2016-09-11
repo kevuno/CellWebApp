@@ -16,7 +16,7 @@
 				<div class="form-group">
 					<label for="imei" class="col-sm-2 control-label">IMEI</label>
 					<div class="col-sm-10">
-					 	<input type="number" class="form-control" value="{{ old('imei') }}" name="imei" id="imei" placeholder="imei" maxlength="10">
+					 	<input type="number" class="form-control" value="{{ old('imei') }}" name="imei" id="imei" placeholder="imei" max="9999999999">
 					</div>
 				</div>
 

@@ -14,6 +14,8 @@
 		<div class="col-lg-12">
 			<form class="form-horizontal" action="{{ url('inventario/agregar_csv')}} " enctype="multipart/form-data" method="post">
 				{{ csrf_field() }}
+
+
 				<div class="form-group">
 					<label for="file" class="col-sm-2 control-label">Archivo</label>
 					<div class="col-sm-10">
