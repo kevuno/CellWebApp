@@ -21,7 +21,7 @@
 	        		<!-- Javascript for the select found in views/layouts/app.blade.php-->
 	        		<form>
 	        			<!-- name atribute of select will be the url of the ajax for the select -->
-	        			<select class="form-control" name="inventario" id="bodega_select">
+	        			<select class="form-control" name="agrupado" id="bodega_select">
     						<option value="all">
 								Todas
 							</option>
