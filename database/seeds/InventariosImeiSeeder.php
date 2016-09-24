@@ -2,24 +2,22 @@
 
 use Illuminate\Database\Seeder;
 
-class InventariosTableSeeder extends Seeder
+class InventariosImeiSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
-    {
+{
+        \DB::table('inventarioimeis')->delete();
         
-
-        \DB::table('inventarios')->delete();
-        
-        \DB::table('inventarios')->insert(array (
+        \DB::table('inventarioimeis')->insert(array (
             0 => 
             array (
                 'id' => 1,
+                'imei' => 1232312312,
                 'estatus' => 'I',
                 'modelo' => 'L87',
                 'marca' => 'F2',
@@ -34,6 +32,7 @@ class InventariosTableSeeder extends Seeder
             1 => 
             array (
                 'id' => 2,
+                'imei' => 1232221232,
                 'estatus' => 'I',
                 'modelo' => 'asdadasd',
                 'marca' => 'adasd',
@@ -48,6 +47,7 @@ class InventariosTableSeeder extends Seeder
             2 => 
             array (
                 'id' => 3,
+                'imei' => 2147483647,
                 'estatus' => 'I',
                 'modelo' => 'Bestia',
                 'marca' => 'Diablo',
@@ -62,6 +62,7 @@ class InventariosTableSeeder extends Seeder
             3 => 
             array (
                 'id' => 4,
+                'imei' => 1234567890,
                 'estatus' => 'I',
                 'modelo' => 'L87',
                 'marca' => 'F2',
@@ -76,6 +77,7 @@ class InventariosTableSeeder extends Seeder
             4 => 
             array (
                 'id' => 6,
+                'imei' => 1234567899,
                 'estatus' => 'I',
                 'modelo' => 'L87',
                 'marca' => 'F2',
@@ -90,6 +92,7 @@ class InventariosTableSeeder extends Seeder
             5 => 
             array (
                 'id' => 8,
+                'imei' => 1230123012,
                 'estatus' => 'I',
                 'modelo' => 'S2',
                 'marca' => 'Nokia',
@@ -104,6 +107,7 @@ class InventariosTableSeeder extends Seeder
             6 => 
             array (
                 'id' => 9,
+                'imei' => '6161616161',
                 'estatus' => 'T',
                 'modelo' => 'Pedro',
                 'marca' => 'Diablo',
@@ -118,6 +122,7 @@ class InventariosTableSeeder extends Seeder
             7 => 
             array (
                 'id' => 12,
+                'imei' => '6546546324',
                 'estatus' => 'I',
                 'modelo' => 'Pedro',
                 'marca' => 'Diablo',
@@ -132,6 +137,7 @@ class InventariosTableSeeder extends Seeder
             8 => 
             array (
                 'id' => 13,
+                'imei' => '9997776661',
                 'estatus' => 'I',
                 'modelo' => 'Roberto',
                 'marca' => 'Diablo',
@@ -146,6 +152,7 @@ class InventariosTableSeeder extends Seeder
             9 => 
             array (
                 'id' => 14,
+                'imei' => '2383703748',
                 'estatus' => 'I',
                 'modelo' => 'S7',
                 'marca' => 'Nokia',
@@ -160,6 +167,7 @@ class InventariosTableSeeder extends Seeder
             10 => 
             array (
                 'id' => 15,
+                'imei' => '5435435432',
                 'estatus' => 'I',
                 'modelo' => 'M67',
                 'marca' => 'LG',
@@ -174,6 +182,7 @@ class InventariosTableSeeder extends Seeder
             11 => 
             array (
                 'id' => 16,
+                'imei' => '5435435404',
                 'estatus' => 'I',
                 'modelo' => 'M67',
                 'marca' => 'LG',
@@ -188,6 +197,7 @@ class InventariosTableSeeder extends Seeder
             12 => 
             array (
                 'id' => 17,
+                'imei' => 1230123019,
                 'estatus' => 'I',
                 'modelo' => 'S3',
                 'marca' => 'Nokia',
@@ -202,6 +212,7 @@ class InventariosTableSeeder extends Seeder
             13 => 
             array (
                 'id' => 18,
+                'imei' => 1234441212,
                 'estatus' => 'T',
                 'modelo' => 'L87',
                 'marca' => 'F2',

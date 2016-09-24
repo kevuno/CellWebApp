@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInventariosTable extends Migration
+class CreateInventarioImeiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,8 @@ class CreateInventariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('inventarios', function (Blueprint $table) {
+        //Create a inventarioImei table
+        Schema::create('inventario_imeis', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('imei')->unique();
             $table->string('estatus');
@@ -34,6 +35,6 @@ class CreateInventariosTable extends Migration
      */
     public function down()
     {
-        
+        //
     }
 }

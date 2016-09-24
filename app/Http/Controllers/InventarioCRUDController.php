@@ -21,6 +21,9 @@ use Auth;
 use App\Bodega;
 //Para poder usar el objeto del inventario
 use App\Inventario;
+//Para poder usar el objeto del inventario con imei
+use App\InventarioImei;
+
 
 //Para poder mostrar cierta inforamcion dependiendo del rol
 use App\Role;
@@ -41,13 +44,13 @@ class InventarioCRUDController extends Controller
 
     /**Pagina inicio del inventario con los elementos uno por uno**/
     
-    public function index(){
+    public function indexImei(){
         if(Auth::user()->hasRole(["owner","admin"])){
             //Mostrar todas los datos si el usuario es admin o owner
-            $inventarios = Inventario::orderBy('created_at','desc')
+            $inventarios = InventarioImei::orderBy('created_at','desc')
                             ->get();
         }else{
-            $inventarios = Inventario::where('bodega_id','=',Auth::user()->bodega->id)->orderBy('created_at','desc')->get();
+            $inventarios = InventarioImei::where('bodega_id','=',Auth::user()->bodega->id)->orderBy('created_at','desc')->get();
         }
     	
 
@@ -58,7 +61,7 @@ class InventarioCRUDController extends Controller
             $bodegas[] = Auth::user()->bodega;
         }
 
-        return view("inventario.index", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
+        return view("inventario.imei", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
     }
 
     /**Pagina inicio del inventario con los elementos uno por uno especificando una bodega.
@@ -82,7 +85,7 @@ class InventarioCRUDController extends Controller
     }
     **/
 
-    public function indexBodega(Request $request){
+    public function indexImeiBodega(Request $request){
         /**
         *  Request $request: Informacion del id de la bodega de la cual se obtendra el inventario.
         *  Si $request ->id es = "all", la sql sera obtener la info de todas las bodegas.
@@ -111,7 +114,7 @@ class InventarioCRUDController extends Controller
         //El request de este controlador normalemente sera json puesto que esta siendo cargado dinmaicamente,
         // pero aun asi va a cargar una vista
         if ($request->ajax()) {
-            return   view("inventario.index_content", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega_id]);
+            return   view("inventario.imei_content", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega_id]);
             
         }
         return "error";

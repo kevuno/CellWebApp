@@ -8,7 +8,7 @@
 	
 		<div class="row">
 			<div class="col-lg-12">
-				<h2>Inventario Agrupado</h2>
+				<h2>Inventario</h2>
 			</div>
 		</div>
 		<div class="row">
@@ -41,9 +41,9 @@
 	        	</div>
 	        	@endrole
 	        	<div class="col-lg-2">
-		        	<a href="{{url("inventario/")}}">
+		        	<a href="{{url("inventario/imei")}}">
 		                <button type="button" class="btn btn-default">
-		                     <i class="fa fa-object-ungroup"></i> Ver 1 por 1
+		                     <i class="fa fa-check"></i> Imeis verificados
 		                </button>
 		            </a>
 	        	</div>

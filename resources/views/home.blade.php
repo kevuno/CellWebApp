@@ -15,12 +15,21 @@
                         <p>
                             <h4>TODO:</h4>
                             <br>
-                            1.-Validar la primera fase de insertar multiples telefonos al inventario.
+
+                            
+                            <br>
+                            1.- Modificar el backend al agregar 1 equipo, multiples, y con csv. Para que funcione sin imei.
+
+
+                            
                             <br>
                             2.- hacer que el usuario pueda poner el nombre de la bodega en el archivo .csv y no el id
 
                             <br>
                             3.- Mejorar validacion de la bodega en el .csv 
+                            <br>
+                            4.- Modificar Transferencias solo suman o restan.
+
     
                             -------
                         </p>

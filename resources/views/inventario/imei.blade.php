@@ -1,4 +1,4 @@
-<!-- resources/views/inventario/index.blade.php -->
+<!-- resources/views/inventario/imei.blade.php -->
 
 @extends('layouts.app')
 
@@ -7,7 +7,7 @@
 	
 		<div class="row">
 			<div class="col-lg-12">
-				<h2>Inventario</h2>
+				<h2>Inventario de Imeis verificados</h2>
 			</div>
 		</div>
 		<div class="row">
@@ -40,9 +40,9 @@
 	        	</div>
 	        	@endrole
 	        	<div class="col-lg-2">
-		        	<a href="{{url("inventario/agrupado")}}">
+		        	<a href="{{url("inventario")}}">
 		                <button type="button" class="btn btn-default">
-		                    <i class="fa fa-object-group"></i> Ver agrupados
+		                    <i class="fa fa-object-group"></i> Inventario Principal
 		                </button>
 		            </a>
 	        	</div>
@@ -71,7 +71,7 @@
 	        	                 
 	        </div>
 		</div>		
-		@include("inventario.index_content")
+		@include("inventario.imei_content")
 
 
 </div>

@@ -26,7 +26,7 @@
 							<li><a href="{{ url('/menu') }}">Menu</a></li>
 
 								@role(["owner","admin","bodega"])
-								<li><a href="{{ url('/inventario/agrupado') }}">Inventario</a></li>
+								<li><a href="{{ url('/inventario') }}">Inventario</a></li>
 								<li><a href="{{ url('/transferencia') }}">Transferencias</a></li>
 								@endrole
 

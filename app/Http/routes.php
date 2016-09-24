@@ -52,14 +52,15 @@ Route::group(['middleware' => 'auth'], function (){
 
         
         //Read
-        Route::get('/', 'InventarioCRUDController@index');
-        Route::post('/', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexBodega']);
-        //Route::get('/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexBodega']); //List of inventario from certain bodega
+            //Main inventario agrupado
+            Route::get('/', 'InventarioCRUDController@indexAgrupado');
+            Route::post('/', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']);
+            //Inventario de imeis verificados
+            Route::get('/imei', 'InventarioCRUDController@indexImei');
+            Route::post('/imei', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexImeiBodega']);
+            
         
-        Route::get('/agrupado', 'InventarioCRUDController@indexAgrupado');
-        Route::post('/agrupado', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']); //List of inventario agrupado from certain bodega
-        //Route::get('/agrupado/b/{bodega}', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']); //List of inventario agrupado from certain bodega
-        
+
         //Create
             //1 by 1
             Route::get('/agregar', 'InventarioCRUDController@create'); //Add form        
