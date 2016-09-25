@@ -1,4 +1,4 @@
-<!-- resources/views/inventatio/add_mult.blade.php -->
+<!-- resources/views/inventatio/add_mult_imei.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -44,17 +44,9 @@
 					<div class="form-group">
 					    <label for="precio_max" class="col-sm-2 control-label">Precio máximo</label>
 					    <div class="col-sm-10">
-					      <input type="number" class="form-control" value="{{ old('precio_max') }}" name="precio_max" id="precio_max" placeholder="precio máximo">
+					      <input type="number" class="form-control" value="{{ old('precio_max') }}" name="precio_max" id="precio_max" placeholder="precio mánimo">
 					    </div>
 					</div>
-
-					<div class="form-group">
-					    <label for="cantidad" class="col-sm-2 control-label"><b>CANTIDAD</b></label>
-					    <div class="col-sm-10">
-					      <input type="number" class="form-control" value="{{ old('cantidad') }}" name="cantidad" id="cantidad" placeholder="cantidad">
-					    </div>
-					</div>
-
 
 
 					<div class="form-group">

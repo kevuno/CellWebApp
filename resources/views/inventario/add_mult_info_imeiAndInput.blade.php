@@ -49,5 +49,5 @@
 <br>
 <br>
 <div class="col-sm-offset-10 col-sm-2">
-  <a href="{{url('inventario/agrupado')}}"><button class="btn btn-default">TERMINAR</button></a>
+  <a href="{{url('inventario')}}"><button class="btn btn-default">TERMINAR</button></a>
 </div>

@@ -42,29 +42,36 @@
 	        	@endrole
 	        	<div class="col-lg-2">
 		        	<a href="{{url("inventario/imei")}}">
-		                <button type="button" class="btn btn-default">
+		                <button type="button" class="btn btn-default center-block">
 		                     <i class="fa fa-check"></i> Imeis verificados
 		                </button>
 		            </a>
 	        	</div>
-	        	<div class="col-lg-3">
+	        	<div class="col-lg-2">
 		        	<a href="{{url("inventario/agregar_mult")}}">
-		                <button type="button" class="btn btn-default">
-		                    <i class="fa fa-plus"></i> Agregar multiples equipos
+		                <button type="button" class="btn btn-default center-block">
+		                    <i class="fa fa-plus"></i> Agregar equipos
 		                </button>
 		            </a>
 	        	</div>
-	        	<div class="col-lg-3">
+	        	<div class="col-lg-2">
+		        	<a href="{{url("inventario/agregar_mult_imei")}}">
+		                <button type="button" class="btn btn-default center-block">
+		                    <i class="fa fa-plus"></i> Agregar con imei	
+		                </button>
+		            </a>
+	        	</div>	        	
+	        	<div class="col-lg-2">
 		        	<a href="{{url("inventario/agregar_csv")}}">
-		                <button type="button" class="btn btn-default">
-		                    <i class="fa fa-plus"></i> Agregar usando archivo .csv 
+		                <button type="button" class="btn btn-default center-block">
+		                    <i class="fa fa-plus"></i> Agregar con .csv 
 		                </button>
 		            </a>
 	        	</div>	        		        	
 	        	<div class="col-lg-2">
 		        	<a href="{{url("inventario/agregar")}}">
-		                <button type="button" class="btn btn-default">
-		                    <i class="fa fa-plus"></i> Agregar 1 equipo
+		                <button type="button" class="btn btn-default center-block">
+		                    <i class="fa fa-plus"></i> Agregar 1 equipo con imei
 		                </button>
 		            </a>
 	        	</div>	        	         

@@ -12,7 +12,7 @@
 
 */
 
-$('#submit_add_mult_info').submit(function(e) {
+$('#submit_add_mult_info_imei').submit(function(e) {
     e.preventDefault();
     var marca = $('#marca').val();
     var modelo = $('#modelo').val();
@@ -56,7 +56,7 @@ $('#submit_add_mult_info').submit(function(e) {
 function formIntoDiv(formId,formInfoArray) {
 
     // Load the view that has the table with the info of the input and the text input for the imei
-    $('#'+formId).load('agregar_mult_InfoAndInput', function() {
+    $('#'+formId).load('agregar_mult_imeiInfoAndInput', function() {
         var table_content = "";
         formInfoArray.forEach(function(entry) {
             table_content = table_content + "<td>"+entry+"</td>";
@@ -91,7 +91,7 @@ function saveAndValidateAjax(imei,formInfoArray) {
     console.log(bodega_id);
     $.ajax({
         type: "POST",
-        url: "agregar_mult_oneElement",
+        url: "agregar_mult_imeioneElement",
         data: {'imei': imei, 'marca': marca, 'modelo': modelo, 'bodega_id': bodega_id, 'precio_min': precio_min, 'precio_max': precio_max,},
         success: function(data) {
             console.log(data);

@@ -69,14 +69,20 @@ Route::group(['middleware' => 'auth'], function (){
             //Usando archivo de .csv
             Route::get('/agregar_csv', 'InventarioCRUDController@create_csv'); //Add form        
             Route::post('/agregar_csv', 'InventarioCRUDController@store_csv'); //Post create
-
+            
             //Usando codigo de barras/ multiples equipos del mismo modelo
-            Route::get('/agregar_mult', 'InventarioCRUDController@create_mult'); //Add form        
+            Route::get('/agregar_mult', 'InventarioCRUDController@create_mult'); //Add form              
             Route::post('/agregar_mult', 'InventarioCRUDController@store_mult'); //Post create
 
+
+            //Usando codigo de barras/ multiples equipos del mismo modelo con imei
+            Route::get('/agregar_mult_imei', 'InventarioCRUDController@create_mult_imei'); //Add form    
                 //Vista de una tabla para usarla en add_mult.js
-                Route::get('/agregar_mult_InfoAndInput', 'InventarioCRUDController@agregar_mult_InfoAndInput'); //Add form      
-                Route::post('/agregar_mult_oneElement', 'InventarioCRUDController@store_mult_oneElement'); //Post create
+                Route::get('/agregar_mult_imeiInfoAndInput', 'InventarioCRUDController@agregar_mult_info_imeiAndInput'); //Add form      
+                Route::post('/agregar_mult_imeioneElement', 'InventarioCRUDController@store_mult_oneElement'); //Post create
+
+
+
 
         //Editar
         Route::get('/editar/{inventario}', 'InventarioCRUDController@edit'); //Post del acción por checkbox
