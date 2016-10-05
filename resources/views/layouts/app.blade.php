@@ -33,29 +33,12 @@
 
 
 	</head>
-<body>
-@include("layouts.app_body")	
-@yield('content')
-</body>
-   
-</html>
-		
-
-<!--
-<script type="text/javascript">
-
-	//Toggle checkbox when clicking on a row that has a checkbox
-	$('.checkbox_row').click(function(event){
-		if(event.target.type !== 'checkbox'){
-			var $checkbox = $(this).find(':checkbox');
-			$checkbox.trigger('click')
-		}
-	});
-
-
-</script>
--->
-
+	<body>
+	@include("layouts.app_body")	
+	@yield('content')
+	</body>
+	   
+</html>	
 
 <script type="text/javascript">
 $.ajaxSetup({

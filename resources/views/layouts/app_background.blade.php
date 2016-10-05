@@ -1,11 +1,9 @@
 <!-- resources/views/layouts/app_background.blade.php -->
-
 <!--This is the app template with the image as a background -->
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-
   		<meta name="_token" content="{!! csrf_token() !!}"/>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +22,7 @@
 		<!-- JavaScripts -->
 		<script type="text/javascript" src="{{URL::asset('assets/js/jquery.js')}}"></script>
 		<script type="text/javascript" src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-		<script src="cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
 		<!--Datatables css-->
 		<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
@@ -33,22 +31,12 @@
 
 
     </head>
-
-    <body style="background-image:url({{URL::asset('assets/img/f2_background.jpg')}}); background-size:100%;">
+	<body style="background-image:url({{URL::asset('assets/img/f2_background.jpg')}}); background-size:100%;">
 		@include("layouts.app_body")
 
 		@yield('content')
-    </body>
+	</body>
 </html>
-
-<!-- JavaScripts -->
-<script type="text/javascript" src="{{URL::asset('assets/js/jquery.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-<script src="cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<!-- CDNS
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
--->
 
 <script type="text/javascript">
 $.ajaxSetup({
