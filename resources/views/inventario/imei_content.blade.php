@@ -44,7 +44,8 @@
 
 <script type="text/javascript">	
 	$(document).ready(function() {
-    	$('#tabla').DataTable({"pageLength": 50,"bSort": false});
+    	//Ordenar por la fecha de adicion
+    	$('#tabla').DataTable({"pageLength": 50,"aaSorting": [[5,'desc']]});
 } );
 </script>
 

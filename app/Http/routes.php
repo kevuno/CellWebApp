@@ -63,8 +63,8 @@ Route::group(['middleware' => 'auth'], function (){
 
         //Create
             //1 by 1
-            Route::get('/agregar', 'InventarioCRUDController@create'); //Add form        
-            Route::post('/agregar', 'InventarioCRUDController@store'); //Post create
+            Route::get('/agregar_uno', 'InventarioCRUDController@create'); //Add form        
+            Route::post('/agregar_uno', 'InventarioCRUDController@store'); //Post create
 
             //Usando archivo de .csv
             Route::get('/agregar_csv', 'InventarioCRUDController@create_csv'); //Add form        

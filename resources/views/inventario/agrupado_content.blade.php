@@ -11,7 +11,7 @@
 						<th>Estatus</th>
 						<th>Bodega</th>
 						<th>Precio Mínimo</th>
-						<th>Precio Máximo</th>								
+						<th>Precio Máximo</th>
 						<th>Acciones</th>
 					</thead>
 					<tbody>
@@ -19,13 +19,14 @@
 							@foreach($inventarios  as $inventario)
 								<tr class="checkbox_row">
 
-									<td>{{$inventario->count}}</td>
+									
+									<td>{{$inventario->cantidad}}</td>
 									<td>{{$inventario->marca}}</td>
 									<td>{{$inventario->modelo}}</td>
 									<td>{{$inventario->estatus}}</td>
-									<td>{{$inventario->bodega}}</td>
+									<td>{{$inventario->bodega->nombre}}</td>
 									<td>{{$inventario->precio_min}}</td>
-									<td>{{$inventario->precio_max}}</td>												
+									<td>{{$inventario->precio_max}}</td>											
 									<td>
 										<a href="{{url('inventario/editar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></button>
 										<a href="{{url('transferencia/agregar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-truck"></i></button>
@@ -41,7 +42,8 @@
 </div>
 <script type="text/javascript">	
 	$(document).ready(function() {
-    	$('#tabla').DataTable({"pageLength": 50,"bSort": false});
+		//Ordenar por la marca
+    	$('#tabla').DataTable({"pageLength": 50,"aaSorting": [[1,'asc']]});
 
 } );
 </script>

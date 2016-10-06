@@ -5,7 +5,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-8">
-			<h2>Agregar multiples equipos con imei verificado</h2>
+			<h2>Agregar multiples equipos</h2>
 		</div>	
 	</div>
 	@include('include.form_errors')
@@ -14,7 +14,7 @@
 		<div class="col-lg-12">
 			<div id="main_content">
 				<!-- Use js to submit the form and load next view -->
-				<form class="form-horizontal" id="submit_add_mult_info_imei">
+				<form class="form-horizontal" action="{{ url('inventario/agregar_mult')}} "  method="post">
 					{{ csrf_field() }}
 					<div class="form-group">
 					    <label for="marca" class="col-sm-2 control-label">Marca</label>
