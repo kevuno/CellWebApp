@@ -276,6 +276,8 @@ class InventarioCRUDController extends Controller
                         $fields_query[$header_atr] = $csvLine[$header_atr]; 
                     }                    
                 }
+                //Save the bodega into the query since it was not in the headers of the csv file.
+                $fields_query["bodega_id"] = $request->bodega_id;
                 //Create object
                 $inventario = Inventario::firstOrNew($fields_query);
 
