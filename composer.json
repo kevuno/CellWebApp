@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "nesbot/carbon": "^1.21",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "orangehill/iseed": "dev-master"
+        "orangehill/iseed": "dev-master",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

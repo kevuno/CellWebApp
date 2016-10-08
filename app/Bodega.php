@@ -23,4 +23,14 @@ class Bodega extends Model
     public function inventario(){
     	return $this->hasMany('App\Inventario');
     }
+
+
+    /*
+    
+     Obetener la bodega destino a la cual la transferencia va
+
+    */
+    public function transferencias(){
+        return $this->hasMany('App\Transferencia');
+    }
 }

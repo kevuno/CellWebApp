@@ -14,4 +14,22 @@ class Transferencia extends Model
         return $this->belongsTo('App\Inventario');
     }
 
+    /*
+    
+     Obetener la bodega a la cual la transferencia proviene
+
+    */
+    public function bod_origen(){
+        return $this->belongsTo('App\Bodega','bodega_origen');
+    }
+
+    /*
+    
+     Obetener la bodega destino a la cual la transferencia va
+
+    */
+    public function bod_destino(){
+        return $this->belongsTo('App\Bodega','bodega_destino');
+    }
+
 }
