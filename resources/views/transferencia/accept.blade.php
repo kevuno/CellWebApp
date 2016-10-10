@@ -7,7 +7,7 @@
 	
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Transferencias completadas</h2>
+			<h2>Transferencias activas</h2>
 		</div>
 	</div>
 	<div class="row">

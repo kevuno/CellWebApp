@@ -18,12 +18,13 @@ $('#bodega_select').change(function(e) {
 });
 
 function loadInfoFromBodega(Bodegaid,url) {
+    console.log(url);
     $.ajax({
         type: "POST",
         url: url,
         data: {'id': Bodegaid},
         success: function(data) {
-        	console.log(data);
+        	//console.log(data);
 			$data = $(data); // the HTML content that controller has produced
             $('#table_content').hide().html($data).fadeIn();
         },

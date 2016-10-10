@@ -1,4 +1,4 @@
-<!-- resources/views/inventario/index_content.blade.php -->
+<!-- resources/views/inventario/agrupado_content.blade.php -->
 <div id="table_content">
 	<div class="row">
 		<div class="col-lg-12">

@@ -25,7 +25,14 @@
                             <br>
                             <i class="fa fa-check"></i>3.- Mejorar validacion de la bodega en el .csv 
                             <br>
-                            4.- Modificar Transferencias solo suman o restan.
+                            <i class="fa fa-check"></i>4.- Vista de transferencias completadas
+                            <br>
+                            5.- Vista de transferencias por aceptar
+                            <br>
+                            5.- Back end de aceptar transferencia
+                            <br>
+                            5.- Crear una leyenda de que significan cada estatus
+                            <br>                            
 
 
                             <br>

@@ -81,12 +81,71 @@ class TransferenciaCRUDController extends Controller
         //Obtener lista de transferencias
         if(Auth::user()->hasRole(["owner","admin"])){
             //Mostrar todas los datos si el usuario es admin o owner
-            $transferencias = Transferencia::all();
+            $transferencias = Transferencia::where('estatus','=',"T")->get();
         }else{
-            $transferencias = Transferencia::where('bodega_origen','=',Auth::user()->bodega->id)
-                                                    ->orWhere('bodega_destino','=',Auth::user()->bodega->id)
+            $transferencias = Transferencia::where('estatus','=',"T")
+                                                    ->where(function($query) {
+                                                        $query->where('bodega_origen','=',Auth::user()->bodega->id)
+                                                        ->orWhere('bodega_destino','=',Auth::user()->bodega->id);
+                                                        })                                                    
                                                     ->orderBy('updated_at','desc')
                                                     ->get();
+
+        }         
+
+        //Pasar la lista de bodegas
+        if(Auth::user()->hasRole(["owner","admin"])){
+            $bodegas = Bodega::orderBy('nombre','asc')->get();            
+        }else{
+            $bodegas[] = Auth::user()->bodega;
+        }
+        return view("transferencia.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
+    }
+
+
+    /**Pagina inicio de las transferencias especificando una bodega. **/
+    /* Accesible only by role: Admin, Owner */
+    
+    public function indexBodega(Request $request){
+
+        $bodega_id = $request->id; #id passed through ajax call in select_bodega.js
+        
+        if($bodega_id == "all"){
+            //Transferencias de todas las bodegas
+            $transferencias = Transferencia::orderBy('updated_at','desc')->get();   
+        }else{
+            //Transferencias de una bodega en especifico
+            $transferencias = Transferencia::where('bodega_origen','=',$bodega_id)
+                                                    ->orWhere('bodega_destino','=',$bodega_id)
+                                                    ->orderBy('updated_at','desc')
+                                                    ->get();
+        }
+
+        //Pasar la lista de bodegas
+        $bodegas = Bodega::orderBy('nombre','asc')->get();
+
+        //Responder solo si el request es json
+        if ($request->ajax()) {
+            return view("transferencia.index_content", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=>$bodega_id]);
+        }
+        return "Error, la seleccion de bodega solo se puede hacer por medio de json";
+    }
+    /**View of list of pending transferencias**/
+
+    public function acceptList(){
+        //Obtener lista de transferencias
+        if(Auth::user()->hasRole(["owner","admin"])){
+            //Mostrar todas los datos si el usuario es admin o owner
+            $transferencias = Transferencia::where('estatus','=',"A")->get();
+        }else{
+            $transferencias = Transferencia::where('estatus','=',"A")
+                                                    ->where(function($query) {
+                                                        $query->where('bodega_origen','=',Auth::user()->bodega->id)
+                                                        ->orWhere('bodega_destino','=',Auth::user()->bodega->id);
+                                                        })                                                    
+                                                    ->orderBy('updated_at','desc')
+                                                    ->get();
+
         }        
 
         //Pasar la lista de bodegas
@@ -95,37 +154,15 @@ class TransferenciaCRUDController extends Controller
         }else{
             $bodegas[] = Auth::user()->bodega;
         }
-        return view("transferencia.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
+        return view("transferencia.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
+
     }
 
 
-    /**Pagina inicio de las transferencias especificando una bodega.
-        Solo los admins pueden usar esta funcion**/
-    
-    public function indexBodega(){
-        if(Auth::user()->hasRole(["owner","admin"])){
-            //Mostrar todas los datos si el usuario es admin o owner
-            $transferencias = Transferencia::orderBy('created_at','desc')
-                            ->get();
-        }else if(Auth::user()->hasRole(["bodega"])){
-            //Mostrar solo los datos de la bodega del usuario si el usuario es bodega.
-            //$inventarios = Inventario::orderBy('created_at', 'asc')->get();
-            $transferencias = Inventario::where('bodega_origen','=',Auth::user()->bodega->id)
-            				->orWhere('bodega_destino','=',Auth::user()->bodega->id)
-                            ->orderBy('created_at','desc')
-                            ->get();
-        }
-    	
 
-        //Pasar la lista de bodegas
-        if(Auth::user()->hasRole(["owner","admin"])){
-            $bodegas = Bodega::orderBy('nombre','asc')->get();            
-        }else{
-            $bodegas[] = Auth::user()->bodega;
-        }
 
-        return view("inventario.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
-    }
+
+
 
 
     /**

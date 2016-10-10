@@ -60,10 +60,11 @@ class InventarioCRUDController extends Controller
             $bodegas[] = Auth::user()->bodega;
         }
 
-        return view("inventario.imei", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
+        return view("inventario.imei", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
     }
 
     /** Tabla de inventario con imei verificados con una bodega especificada**/
+    /* Accesible only by role: Admin, Owner */
     public function indexImeiBodega(Request $request){
         /**
         *  Request $request: Informacion del id de la bodega de la cual se obtendra el inventario.
@@ -75,28 +76,22 @@ class InventarioCRUDController extends Controller
         
         if($bodega_id == "all"){
             //Inventario de todas las bodegas
-            $inventarios = Inventario::orderBy('created_at','desc')->get();            
+            $inventarios = InventarioImei::all();            
         }else{
             //Inventario de una bodega en especifico
-            $inventarios = Inventario::where('bodega_id','=',$bodega_id)->orderBy('created_at','desc')->get();
+            $inventarios = InventarioImei::where('bodega_id','=',$bodega_id)->orderBy('created_at','desc')->get();
         }
         
 
         //Pasar la lista de bodegas
-        if(Auth::user()->hasRole(["owner","admin"])){
-            $bodegas = Bodega::orderBy('nombre','asc')->get();
+        $bodegas = Bodega::orderBy('nombre','asc')->get();
 
-        }else if(Auth::user()->hasRole(["bodega"])){
-            $bodegas[] = Auth::user()->bodega;
-        }
 
-        //El request de este controlador normalemente sera json puesto que esta siendo cargado dinmaicamente,
-        // pero aun asi va a cargar una vista
+        //Responder solo si el request es json
         if ($request->ajax()) {
             return   view("inventario.imei_content", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega_id]);
-            
         }
-        return "error";
+        return "Error, la seleccion de bodega solo se puede hacer por medio de json";
     }   
 
     /** Tabla de inventario**/
@@ -116,51 +111,33 @@ class InventarioCRUDController extends Controller
             $bodegas[] = Auth::user()->bodega;
         }
 
-        return view("inventario.agrupado", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "null"]);
+        return view("inventario.agrupado", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
     }
 
     /** Tabla de inventario con una bodega especificada**/
+    /* Accesible only by role: Admin, Owner */
     public function indexAgrupadoBodega(Request $request){
 
-        $bodega_id = $request->id;
-
+        $bodega_id = $request->id; #id passed through ajax call in select_bodega.js
 
         
         if($bodega_id == "all"){
             //Inventario de todas las bodegas
-            $inventarios = DB::table('inventarios')
-                         ->select(DB::raw('*,count(id) as count'))
-                         ->groupBy('marca')
-                         ->groupBy('modelo')
-                         ->groupBy('bodega_id')
-                         ->get(); 
-
-
+            $inventarios = Inventario::all();            
         }else{
             //Inventario de una bodega en especifico
-            $inventarios = DB::table('inventarios')
-                         ->select(DB::raw('*,count(id) as count'))
-                         ->where('bodega_id','=',$bodega_id)
-                         ->groupBy('marca')
-                         ->groupBy('modelo')
-                         ->groupBy('bodega_id')
-                         ->get();
-            
+            $inventarios = Inventario::where('bodega_id','=',$bodega_id)->get();
         }
-
-        //Asignar el nombre de la bodega a los resultados puesto que no son objectos del inventario sino un array de objectos de la tabla.
-        foreach ($inventarios as $inventario) {
-            //Encontrar el objeto en la base de datos con el id que tiene el array del inventario, sacar el nombre y asignarlo como bodega al $inventario.
-            $inventario->bodega = Bodega::find($inventario->bodega_id)->nombre;
-        }
+        
+        
         //Pasar la lista de bodegas
-        if(Auth::user()->hasRole(["owner","admin"])){
-            $bodegas = Bodega::orderBy('nombre','asc')->get();            
-        }else{
-            $bodegas[] = Auth::user()->bodega;
-        }
+        $bodegas = Bodega::orderBy('nombre','asc')->get();            
 
-        return view("inventario.agrupado_content", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=> $bodega_id]);
+        //Responder solo si el request es json
+        if ($request->ajax()) {
+            return   view("inventario.agrupado_content", ['inventarios' => $inventarios,'bodegas'=>$bodegas,'bodega_selected'=>$bodega_id]);
+        }
+        return "Error, la seleccion de bodega solo se puede hacer por medio de json";
     }
 
 

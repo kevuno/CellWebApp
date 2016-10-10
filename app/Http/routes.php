@@ -49,9 +49,11 @@ Route::group(['middleware' => 'auth'], function (){
         //Read
             //Main inventario agrupado
             Route::get('/', 'InventarioCRUDController@indexAgrupado');
+            #Lista del inventario con una bodega seleccionada
             Route::post('/', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexAgrupadoBodega']);
             //Inventario de imeis verificados
             Route::get('/imei', 'InventarioCRUDController@indexImei');
+            #Lista del inventario de imeis verificados con una bodega seleccionada
             Route::post('/imei', ['middleware' => ['role:admin|owner'], 'uses' => 'InventarioCRUDController@indexImeiBodega']);
             
         
@@ -96,14 +98,15 @@ Route::group(['middleware' => 'auth'], function (){
 
         //Lista
         Route::get('/lista', 'TransferenciaCRUDController@index');
+        Route::post('/lista', ['middleware' => ['role:admin|owner'], 'uses' => 'TransferenciaCRUDController@indexBodega']);
 
         //Create
         Route::get('/agregar/{inventario}', 'TransferenciaCRUDController@create'); //Add form
         Route::post('/agregar/{inventario}', 'TransferenciaCRUDController@store'); //Post create
         
-        //Confirm Transferencia
-        Route::get('/confirmar/{inventario}', 'TransferenciaCRUDController@confirm'); //Confirm form
-        Route::post('/confirmar/{inventario}', 'TransferenciaCRUDController@confirmStore'); //Post Confirm
+        //Aceptar Transferencia
+        Route::get('/aceptar/', 'TransferenciaCRUDController@accept'); //Confirm form
+        Route::post('/aceptar/', 'TransferenciaCRUDController@acceptStore'); //Post Confirm
         
         
         //Update
