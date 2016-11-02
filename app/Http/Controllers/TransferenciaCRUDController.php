@@ -130,6 +130,7 @@ class TransferenciaCRUDController extends Controller
         }
         return "Error, la seleccion de bodega solo se puede hacer por medio de json";
     }
+
     /**View of list of pending transferencias**/
 
     public function acceptList(){
@@ -145,7 +146,6 @@ class TransferenciaCRUDController extends Controller
                                                         })                                                    
                                                     ->orderBy('updated_at','desc')
                                                     ->get();
-
         }        
 
         //Pasar la lista de bodegas
