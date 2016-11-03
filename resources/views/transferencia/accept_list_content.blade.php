@@ -1,4 +1,4 @@
-<!-- resources/views/transferencias/index_content.blade.php -->
+<!-- resources/views/transferencias/accept_content.blade.php -->
 <div id="table_content">
 			<div class="row">
 				<div class="col-lg-12">
@@ -6,11 +6,7 @@
 					<table id="tabla" class="table table-striped">
 							<thead>
 								<th>Transferencia grupo</th>
-								<th>Marca</th>
-								<th>Modelo</th>
-								<th>Cantidad</th>
-								<th>Fecha de solicitud</th>
-								<th>Fecha de llegada</th>
+								<th>Fecha de solicitud</th>	
 								<th>Bodega Origen</th>
 								<th>Bodega Destino</th>
 								<th>Estatus</th>
@@ -20,18 +16,15 @@
 							<tbody>
 								
 									@foreach($transferencias  as $transferencia)
-										<tr class="checkbox_row">
+										<tr>
 											<td>{{$transferencia->transferencia_grupo}}</td>
-											<td>{{$transferencia->inventario->marca}}</td>
-											<td>{{$transferencia->inventario->modelo}}</td>
-											<td>{{$transferencia->cantidad}}</td>
 											<td>{{$transferencia->fecha_solicitud}}</td>
-											<td>{{$transferencia->fecha_llegada}}</td>
 											<td>{{$transferencia->bod_origen->nombre}}</td>
 											<td>{{$transferencia->bod_destino->nombre}}</td>
 											<td>{{$transferencia->estatus}}</td>
 											<td>{{$transferencia->transferido_por}}</td>
 											<td>
+												<a href="{{url('transferencia/aceptar_detalles/'.$transferencia->transferencia_grupo)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-search"></i></button>
 												<!--TODO editar, transferir y agregar a garantia multiples equipos a la vez-->
 											</td>													
 										</tr>

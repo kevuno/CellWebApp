@@ -38,20 +38,6 @@
         		</form>
         	</div>
         	@endrole
-        	<div class="col-lg-3">
-	        	<a href="{{url("inventario/agrupado")}}">
-	                <button type="button" class="btn btn-default">
-	                    <i class="fa fa-object-group"></i> Ver agrupados
-	                </button>
-	            </a>
-        	</div>
-        	<div class="col-lg-3">
-	        	<a href="{{url("inventario/agregar")}}">
-	                <button type="button" class="btn btn-default">
-	                    <i class="fa fa-plus"></i> Agregar equipos
-	                </button>
-	            </a>
-        	</div>
         
         </div>
 	</div>		

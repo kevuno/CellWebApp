@@ -105,8 +105,10 @@ Route::group(['middleware' => 'auth'], function (){
         Route::post('/agregar/{inventario}', 'TransferenciaCRUDController@store'); //Post create
         
         //Aceptar Transferencia
-        Route::get('/aceptar/', 'TransferenciaCRUDController@accept'); //Confirm form
-        Route::post('/aceptar/', 'TransferenciaCRUDController@acceptStore'); //Post Confirm
+        Route::get('/aceptar_lista', 'TransferenciaCRUDController@accept_list'); //List view
+        Route::get('/aceptar_detalles', 'TransferenciaCRUDController@accept_detail'); //Accept detail view
+
+        Route::post('/aceptar', 'TransferenciaCRUDController@acceptStore'); //Post Confirm
         
         
         //Update

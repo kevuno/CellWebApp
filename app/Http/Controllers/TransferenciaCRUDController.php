@@ -133,17 +133,19 @@ class TransferenciaCRUDController extends Controller
 
     /**View of list of pending transferencias**/
 
-    public function acceptList(){
+    public function accept_list(){
         //Obtener lista de transferencias
         if(Auth::user()->hasRole(["owner","admin"])){
             //Mostrar todas los datos si el usuario es admin o owner
-            $transferencias = Transferencia::where('estatus','=',"A")->get();
+            $transferencias = Transferencia::where('estatus','=',"A")->groupBy('transferencia_grupo')
+                                                                     ->get();
         }else{
             $transferencias = Transferencia::where('estatus','=',"A")
                                                     ->where(function($query) {
                                                         $query->where('bodega_origen','=',Auth::user()->bodega->id)
                                                         ->orWhere('bodega_destino','=',Auth::user()->bodega->id);
-                                                        })                                                    
+                                                        })
+                                                    ->groupBy('transferencia_grupo')                                                    
                                                     ->orderBy('updated_at','desc')
                                                     ->get();
         }        
@@ -154,10 +156,40 @@ class TransferenciaCRUDController extends Controller
         }else{
             $bodegas[] = Auth::user()->bodega;
         }
-        return view("transferencia.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
+
+        return view("transferencia.accept_list", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
 
     }
 
+
+    /**View of list of pending transferencias**/
+
+    public function accept_detail(){
+        //Obtener lista de transferencias
+        if(Auth::user()->hasRole(["owner","admin"])){
+            //Mostrar todas los datos si el usuario es admin o owner
+            $transferencias = Transferencia::where('estatus','=',"A")->get();
+        }else{
+            $transferencias = Transferencia::where('estatus','=',"A")
+                                                    ->where(function($query) {
+                                                        $query->where('bodega_origen','=',Auth::user()->bodega->id)
+                                                        ->orWhere('bodega_destino','=',Auth::user()->bodega->id);
+                                                        })
+                                                    ->groupBy('transferencia_grupo')                                                    
+                                                    ->orderBy('updated_at','desc')
+                                                    ->get();
+        }        
+
+        //Pasar la lista de bodegas
+        if(Auth::user()->hasRole(["owner","admin"])){
+            $bodegas = Bodega::orderBy('nombre','asc')->get();            
+        }else{
+            $bodegas[] = Auth::user()->bodega;
+        }
+
+        return view("transferencia.accept_list", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
+
+    }
 
 
 
