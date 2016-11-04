@@ -51,9 +51,8 @@ class TransferenciaCRUDController extends Controller
 
 
 
-    /** POST of the form for storing a new inventario **/
+    /** POST of the form for storing a new transferencia **/
     public function store(Inventario $inventario, Request $request){
-    	var_dump($inventario);
     	// Cambiar el estatus del inventario
     	$inventario -> estatus ="T";
     	$inventario -> save();
@@ -131,6 +130,11 @@ class TransferenciaCRUDController extends Controller
         return "Error, la seleccion de bodega solo se puede hacer por medio de json";
     }
 
+
+    /**
+        *ACCEPT
+    **/    
+
     /**View of list of pending transferencias**/
 
     public function accept_list(){
@@ -164,30 +168,14 @@ class TransferenciaCRUDController extends Controller
 
     /**View of list of pending transferencias**/
 
-    public function accept_detail(){
+    public function accept_detail(Transferencia $transferencia, Request $request){
+
+        $transferencia_grupo = $transferencia->transferencia_grupo;
         //Obtener lista de transferencias
-        if(Auth::user()->hasRole(["owner","admin"])){
             //Mostrar todas los datos si el usuario es admin o owner
-            $transferencias = Transferencia::where('estatus','=',"A")->get();
-        }else{
-            $transferencias = Transferencia::where('estatus','=',"A")
-                                                    ->where(function($query) {
-                                                        $query->where('bodega_origen','=',Auth::user()->bodega->id)
-                                                        ->orWhere('bodega_destino','=',Auth::user()->bodega->id);
-                                                        })
-                                                    ->groupBy('transferencia_grupo')                                                    
-                                                    ->orderBy('updated_at','desc')
-                                                    ->get();
-        }        
+        $transferencias = Transferencia::where('transferencia_grupo','=',$transferencia_grupo)->get();
 
-        //Pasar la lista de bodegas
-        if(Auth::user()->hasRole(["owner","admin"])){
-            $bodegas = Bodega::orderBy('nombre','asc')->get();            
-        }else{
-            $bodegas[] = Auth::user()->bodega;
-        }
-
-        return view("transferencia.accept_list", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
+        return view("transferencia.accept_detail", ['transferencias' => $transferencias]);
 
     }
 

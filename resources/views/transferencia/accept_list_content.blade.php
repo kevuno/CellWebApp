@@ -1,4 +1,4 @@
-<!-- resources/views/transferencias/accept_content.blade.php -->
+<!-- resources/views/transferencias/accept_list_content.blade.php -->
 <div id="table_content">
 			<div class="row">
 				<div class="col-lg-12">
@@ -24,7 +24,7 @@
 											<td>{{$transferencia->estatus}}</td>
 											<td>{{$transferencia->transferido_por}}</td>
 											<td>
-												<a href="{{url('transferencia/aceptar_detalles/'.$transferencia->transferencia_grupo)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-search"></i></button>
+												<a href="{{url('transferencia/aceptar_detalles/'.$transferencia->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-search"></i></button>
 												<!--TODO editar, transferir y agregar a garantia multiples equipos a la vez-->
 											</td>													
 										</tr>

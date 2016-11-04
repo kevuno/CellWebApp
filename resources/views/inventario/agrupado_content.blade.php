@@ -14,27 +14,25 @@
 						<th>Precio Máximo</th>
 						<th>Acciones</th>
 					</thead>
-					<tbody>
-						
-							@foreach($inventarios  as $inventario)
-								<tr class="checkbox_row">
+					<tbody>					
+						@foreach($inventarios  as $inventario)
+							<tr class="checkbox_row">
 
-									
-									<td>{{$inventario->cantidad}}</td>
-									<td>{{$inventario->marca}}</td>
-									<td>{{$inventario->modelo}}</td>
-									<td>{{$inventario->estatus}}</td>
-									<td>{{$inventario->bodega->nombre}}</td>
-									<td>{{$inventario->precio_min}}</td>
-									<td>{{$inventario->precio_max}}</td>											
-									<td>
-										<a href="{{url('inventario/editar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></button>
-										<a href="{{url('transferencia/agregar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-truck"></i></button>
-										<a href="{{url('garantia/agregar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-medkit"></i></button>
-									</td>														
-								</tr>
-							@endforeach
-						</form>
+								
+								<td>{{$inventario->cantidad}}</td>
+								<td>{{$inventario->marca}}</td>
+								<td>{{$inventario->modelo}}</td>
+								<td>{{$inventario->estatus}}</td>
+								<td>{{$inventario->bodega->nombre}}</td>
+								<td>{{$inventario->precio_min}}</td>
+								<td>{{$inventario->precio_max}}</td>											
+								<td>
+									<a href="{{url('inventario/editar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></button>
+									<a href="{{url('transferencia/agregar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-truck"></i></button>
+									<a href="{{url('garantia/agregar/'.$inventario->id)}}"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-medkit"></i></button>
+								</td>														
+							</tr>
+						@endforeach
 					</tbody>
 			</table>
 		</div>

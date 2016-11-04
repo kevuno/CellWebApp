@@ -29,9 +29,15 @@
                             <br>
                             5.- Vista de transferencias por aceptar
                             <br>
-                            5.- Back end de aceptar transferencia
+                            5.- Poder seleccionar una cantidad de equipos para transferir
+                            <br> 
+                            5.- Poder agregar mas de un tipo de equipos en la misma transferencia                                                  
                             <br>
-                            5.- Crear una leyenda de que significan cada estatus
+                            6.- Back end de aceptar transferencia
+                            <br>
+                            6.- Agregar middleware para editar objectos del inventario solo si son de la bodega del usuario
+                            <br>
+                            7.- Crear una leyenda de que significan cada estatus
                             <br>                            
 
 

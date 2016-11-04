@@ -106,9 +106,10 @@ Route::group(['middleware' => 'auth'], function (){
         
         //Aceptar Transferencia
         Route::get('/aceptar_lista', 'TransferenciaCRUDController@accept_list'); //List view
-        Route::get('/aceptar_detalles', 'TransferenciaCRUDController@accept_detail'); //Accept detail view
 
-        Route::post('/aceptar', 'TransferenciaCRUDController@acceptStore'); //Post Confirm
+        Route::get('/aceptar_detalles/{transferencia}', ['middleware' => 'hasBodegaTransferencia', 'uses' => 'TransferenciaCRUDController@accept_detail']);
+
+        Route::post('/aceptar_detalles/{transferencia}', 'TransferenciaCRUDController@acceptStore'); //Post Confirm
         
         
         //Update

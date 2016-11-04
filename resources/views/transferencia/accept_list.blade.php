@@ -1,4 +1,4 @@
-<!-- resources/views/transferencia/index.blade.php -->
+<!-- resources/views/transferencia/accept_detail.blade.php -->
 
 @extends('layouts.app')
 
@@ -7,7 +7,7 @@
 	
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Transferencias activas</h2>
+			<h2>Detalles de Transferencia</h2>
 		</div>
 	</div>
 	<div class="row">
@@ -17,7 +17,6 @@
         <div class="col-sm-offset-4 col-sm-8">
         	@role(["owner","admin"])
         	<div class="col-lg-4">
-        		<!-- Javascript for the select found in views/layouts/app.blade.php-->
         		<form>
         			<select class="form-control" name="lista" id="bodega_select">
 						<option value="all">
