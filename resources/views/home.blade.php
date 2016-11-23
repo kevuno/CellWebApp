@@ -27,11 +27,13 @@
                             <br>
                             <i class="fa fa-check"></i>4.- Vista de transferencias completadas
                             <br>
-                            5.- Vista de transferencias por aceptar
+                            <i class="fa fa-check"></i>5.- Vista de transferencias por aceptar
                             <br>
                             5.- Poder seleccionar una cantidad de equipos para transferir
                             <br> 
-                            5.- Poder agregar mas de un tipo de equipos en la misma transferencia                                                  
+                            5.- Poder agregar mas de un tipo de equipos en la misma transferencia
+                            <br> 
+                            5.- Sumar y restar equipos al momento de hacer la transferencia y checar que si esten disponibles los equipos para transferir                                            
                             <br>
                             6.- Back end de aceptar transferencia
                             <br>
@@ -43,8 +45,10 @@
 
                             <br>
                             <h3>B.02:</h3>
+                                -Vista para agregar nuevos usuarios
                                 -Vista para agregar bodegas<br>
                                 -Implementar garantias <br>
+                                -Username en lugar de email para el login<br>
                                 -Logs<br>
                                 -Modifical informacion de usuario<br>
                                 -Admin panel<br>

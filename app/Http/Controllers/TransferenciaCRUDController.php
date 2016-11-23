@@ -169,13 +169,20 @@ class TransferenciaCRUDController extends Controller
     /**View of list of pending transferencias**/
 
     public function accept_detail(Transferencia $transferencia, Request $request){
+        // In order to obtain the info of the whole group of the transferencia, we pass only 1 element of the transferencia.
+        // From that 1 element we can get the group_id, which will be used to obtain all the elements of the group.
 
         $transferencia_grupo = $transferencia->transferencia_grupo;
+        $bodega_origen = $transferencia->bod_origen->nombre;
+        $bodega_destino = $transferencia->bod_destino->nombre;
+
         //Obtener lista de transferencias
             //Mostrar todas los datos si el usuario es admin o owner
         $transferencias = Transferencia::where('transferencia_grupo','=',$transferencia_grupo)->get();
 
-        return view("transferencia.accept_detail", ['transferencias' => $transferencias]);
+        return view("transferencia.accept_detail", ['transferencias' => $transferencias,
+                                                     'bodega_origen' => $bodega_origen,
+                                                    'bodega_destino' => $bodega_destino ]);
 
     }
 
