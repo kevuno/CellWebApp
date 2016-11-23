@@ -16,7 +16,7 @@
 			</div>
 			<table class="table table-striped">
 				<thead>
-					<th>IMEI</th>
+					<th>Cantidad</th>
 					<th>Marca</th>											
 					<th>Modelo</th>
 					<th>Estatus</th>
@@ -25,9 +25,9 @@
 					<th>Precio Máximo</th>
 				</thead>
 				<tbody>					
-					<tr class="checkbox_row">
-						<!--<td><input type="checkbox" name="{{$inventario->id}}" value="{{$inventario->id}}"></td>-->
-						<td>{{$inventario->imei}}</td>
+					<tr>
+						
+						<td><b>{{$inventario->cantidad}}</b></td>
 						<td>{{$inventario->marca}}</td>
 						<td>{{$inventario->modelo}}</td>
 						<td>{{$inventario->estatus}}</td>
@@ -62,7 +62,13 @@
 
 				    </div>
 				</div>
-				
+
+				<div class="form-group">
+				    <label for="cantidad" class="col-sm-2 control-label"><b>CANTIDAD</b></label>
+				    <div class="col-sm-10">
+				      <input type="number" class="form-control" value="{{ old('cantidad') }}" name="cantidad" id="cantidad" placeholder="cantidad">
+				    </div>
+				</div>			
 
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
