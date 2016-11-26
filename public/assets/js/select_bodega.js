@@ -10,23 +10,22 @@ $('#bodega_select').change(function(e) {
 		clicked = true;
 
         var bodega_id = $(this).find(':selected').val();
-        var url = $(this).attr('name');
+        var url = $(this).attr('name');		
 
-		loadInfoFromBodega(bodega_id,url);
+        loadInfoFromBodega(bodega_id,url);
 
 	}	
 });
 
 function loadInfoFromBodega(Bodegaid,url) {
-    console.log(url);
     $.ajax({
         type: "POST",
         url: url,
         data: {'id': Bodegaid},
         success: function(data) {
-        	//console.log(data);
-			$data = $(data); // the HTML content that controller has produced
+            $data = $(data); // the HTML content that controller has produced
             $('#table_content').hide().html($data).fadeIn();
+
         },
         error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
         	$('body').hide().html(jqXHR.responseText).fadeIn();
@@ -34,4 +33,11 @@ function loadInfoFromBodega(Bodegaid,url) {
 	        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
     	}
     });
+
+    //If the url belongs to the transferencia add form, then we load the inventario so that it is stored in the js window
+    // variable and so that add_transferencia.js can use it.
+
+
+
 }
+

@@ -9,77 +9,47 @@
 		</div>	
 	</div>
 	@include('include.form_errors')
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="col-lg-6">
-				<h3>Información del equipo</h3>
-			</div>
-			<table class="table table-striped">
-				<thead>
-					<th>Cantidad</th>
-					<th>Marca</th>											
-					<th>Modelo</th>
-					<th>Estatus</th>
-					<th>Bodega</th>
-					<th>Precio Mínimo</th>
-					<th>Precio Máximo</th>
-				</thead>
-				<tbody>					
-					<tr>
-						
-						<td><b>{{$inventario->cantidad}}</b></td>
-						<td>{{$inventario->marca}}</td>
-						<td>{{$inventario->modelo}}</td>
-						<td>{{$inventario->estatus}}</td>
-						<td>{{$inventario->bodega->nombre}}</td>
-						<td>{{$inventario->precio_min}}</td>
-						<td>{{$inventario->precio_max}}</td>																		
-					</tr>
-					</form>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
 
-			<form class="form-horizontal" action="{{ url('transferencia/agregar/'.$inventario->id)}} "  method="post">
-				{{ csrf_field() }}
-
-				<div class="form-group">
-				    <label for="bodega" class="col-sm-2 control-label">Bodega Destino</label>
-				    <div class="col-sm-10">
-				    	<input type="hidden" id="view_type" value="view_only">
-				    	<select class="form-control" name="bodega_id" id="bodega_select">
+	<div class="row">
+		<div class="col-lg-5">
+		    De: @role(["owner","admin"])		        	
+	        		<form>
+	        			<select class="form-control" name="agregar" id="bodega_select">
 							@foreach($bodegas as $bodega)
-									@if($bodega != $inventario->bodega)
-										<option value="{{$bodega->id}}" selected >
-										{{$bodega->nombre}}
-										</option>
-									@endif
+								@if ($bodega->id == $bodega_selected->id)
+								<option value="{{$bodega->id}}" selected >				
+									{{$bodega->nombre}}
+								</option>		
+								@else
+								<option value="{{$bodega->id}}" >
+									{{$bodega->nombre}}
+								</option>		
+								@endif
 							@endforeach
 						</select>
+	        		</form>
+				@endrole
 
-				    </div>
+				@role("bodega")
+				<div class="panel panel-default">
+				  <div class="panel-body">
+				    {{$bodega_selected->nombre}}
+				  </div>
 				</div>
-
-				<div class="form-group">
-				    <label for="cantidad" class="col-sm-2 control-label"><b>CANTIDAD</b></label>
-				    <div class="col-sm-10">
-				      <input type="number" class="form-control" value="{{ old('cantidad') }}" name="cantidad" id="cantidad" placeholder="cantidad">
-				    </div>
-				</div>			
-
-				<div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button type="submit" class="btn btn-default">Transferir</button>
-				    </div>
-				</div>
-		
-
-
-			</form>
+				@endrole
 		</div>
-	</div>
+		<div class="col-lg-2">
+			<center>
+				<div  class="hidden-md hidden-lg">
+					<i class="fa fa-arrow-down text-success" style="font-size:60px;"></i>
+				</div>
+				<div class="visible-md visible-lg">
+					<i class="fa fa-arrow-right text-success" style="font-size:60px;"></i>
+				</div>
+			</center>
+		</div>		
+	
+	@include("transferencia.add_content")
+
 </div>
 @endsection

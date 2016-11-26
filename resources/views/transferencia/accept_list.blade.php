@@ -7,7 +7,7 @@
 	
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Detalles de Transferencia</h2>
+			<h2>Lista de transferenicas por aceptar</h2>
 		</div>
 	</div>
 	<div class="row">
@@ -18,7 +18,7 @@
         	@role(["owner","admin"])
         	<div class="col-lg-4">
         		<form>
-        			<select class="form-control" name="lista" id="bodega_select">
+        			<select class="form-control" name="aceptar_lista" id="bodega_select">
 						<option value="all">
 							Todas
 						</option>

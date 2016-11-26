@@ -171,6 +171,10 @@ return [
         /* Reverse seeder
         */
         Orangehill\Iseed\IseedServiceProvider::class,
+        /*
+         *Php variable to JS
+         */
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class
 
 
     ],

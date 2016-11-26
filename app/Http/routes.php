@@ -97,18 +97,19 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('/', 'TransferenciaCRUDController@menu');
 
         //Lista
-        Route::get('/lista', 'TransferenciaCRUDController@index');
-        Route::post('/lista', ['middleware' => ['role:admin|owner'], 'uses' => 'TransferenciaCRUDController@indexBodega']);
+        Route::get('/completadas', 'TransferenciaCRUDController@completedList');
+        Route::post('/completadas', ['middleware' => ['role:admin|owner'], 'uses' => 'TransferenciaCRUDController@completedListBodega']);
 
         //Create
-        Route::get('/agregar/{inventario}', 'TransferenciaCRUDController@create'); //Add form
+        Route::get('/agregar/{inventario}', 'TransferenciaCRUDController@createSelected'); //Add form, using an element from inventario as start point
+        Route::get('/agregar/', 'TransferenciaCRUDController@createEmpty'); //Add form basic
+        Route::post('/agregar/', 'TransferenciaCRUDController@createBodegaSelected'); //Selecting bodega
         Route::post('/agregar/{inventario}', 'TransferenciaCRUDController@store'); //Post create
         
         //Aceptar Transferencia
-        Route::get('/aceptar_lista', 'TransferenciaCRUDController@accept_list'); //List view
-
+        Route::get('/aceptar_lista', 'TransferenciaCRUDController@acceptList'); //List view
+        Route::post('/aceptar_lista', ['middleware' => ['role:admin|owner'], 'uses' => 'TransferenciaCRUDController@acceptListBodega']);
         Route::get('/aceptar_detalles/{transferencia}', ['middleware' => 'hasBodegaTransferencia', 'uses' => 'TransferenciaCRUDController@accept_detail']);
-
         Route::post('/aceptar_detalles/{transferencia}', 'TransferenciaCRUDController@acceptStore'); //Post Confirm
         
         

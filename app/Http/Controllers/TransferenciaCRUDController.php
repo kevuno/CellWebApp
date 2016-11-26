@@ -22,6 +22,9 @@ use App\Transferencia;
 //para poder usar el datatables
 use Datatables;
 
+//Para pasar las variables de php a javascript
+use JavaScript;
+
 class TransferenciaCRUDController extends Controller
 {
     /**
@@ -40,14 +43,108 @@ class TransferenciaCRUDController extends Controller
         *CREATE   
     **/
 
-    /** Form for create **/
-    public function create(Inventario $inventario){
+    /** Form for create new transferencia (with no marca selected yet) **/
+    public function createEmpty(){
+
 
         //Pasar la lista de bodegas
-        $bodegas = Bodega::orderBy('nombre','asc')->get();    
+        if(Auth::user()->hasRole(["owner","admin"])){
+            //Select all bodegas
+            $bodegas = Bodega::orderBy('nombre','asc')->get();
+            //Select the first one by default
+            $bodega_selected = Bodega::orderBy('nombre','asc')->first();
+            //Select all the inventory of the first bodega (by default) so that add_transferencia.js gets encharged of showing the marcas and modelos
+
+            $inventario_completo = Inventario::where('bodega_id','=',$bodega_selected->id)->get();
+            //Pasar la lista de marcas (la lista de modelos cargarga usando ajax solo si se ha seleccionado una marca)
+            $inventario_con_marcas = Inventario::where('bodega_id','=',$bodega_selected->id)->groupBy('marca')->get();
+        }else{
+            //Select all bodegas
+            $bodegas = Bodega::orderBy('nombre','asc')->get();
+            //Select the bodega of the user
+            $bodega_selected = Auth::user()->bodega;
+            //Pasamos todo el inventario para que add_transferencia.js se encargue de mostrar las marcas y modelos que sean correspondientes
+            $inventario_completo = Inventario::where('bodega_id','=',Auth::user()->bodega->id)->get();
+            //Pasar la lista de marcas (la lista de modelos cargarga usando ajax solo si se ha seleccionado una marca)
+            $inventario_con_marcas = Inventario::where('bodega_id','=',Auth::user()->bodega->id)->groupBy('marca')->get();
+        }
         
-        return view("transferencia.add",['bodegas'=>$bodegas,'inventario'=>$inventario]);
+
+
+        JavaScript::put([
+            'inventario_completo' => $inventario_completo,
+            'inventario_con_marcas' => $inventario_con_marcas
+        ]);
+
+        
+        return view("transferencia.add",['bodegas'=>$bodegas,
+                                         'bodega_selected'=> $bodega_selected, 
+                                         'inventario_con_marcas' => $inventario_con_marcas,
+                                         'inventario_completo' => $inventario_completo
+                                         ]);
     }
+
+
+    /** Form for create new transferencia with a bodega selected**/
+    /*Only available for admins and owner*/
+    public function createBodegaSelected(Request $request){
+
+        $bodega_id = $request->id; #id passed through ajax call in select_bodega.js
+        
+        //Pasar la lista de bodegas
+        $bodegas = Bodega::orderBy('nombre','asc')->get();
+        //Obtain the bodega from the id that was selected
+        $bodega_selected = Bodega::find($bodega_id);
+        //Pasamos todo el inventario para que add_transferencia.js se encargue de mostrar las marcas y modelos que sean correspondientes
+        $inventario_completo = Inventario::where('bodega_id','=',$bodega_id)->get();
+       
+        //Pasar la lista de marcas (la lista de modelos cargarga usando ajax solo si se ha seleccionado una marca)
+        $inventario_con_marcas = Inventario::groupBy('marca')->where('bodega_id','=',$bodega_id)->get();
+
+        JavaScript::put([
+            'inventario_completo' => $inventario_completo,
+            'inventario_con_marcas' => $inventario_con_marcas
+        ]);
+
+        //Responder solo si el request es json
+        if ($request->ajax()) {
+            return view("transferencia.add_content", ['bodegas'=>$bodegas,
+                                         'bodega_selected'=> $bodega_selected, 
+                                         'inventario_con_marcas' => $inventario_con_marcas,
+                                         'inventario_completo' => $inventario_completo
+                                         ]);
+
+        }
+        return "Error, la seleccion de bodega para hacer una transferencia solo se puede hacer por medio de ajax";
+
+
+    }    
+
+    
+
+    /** Form for create new transferencia (after selecting a marca from the form, or from the list of inventarios) **/
+    /**TODO**/
+    public function createSelected(Inventario $inventario){
+
+        //Pasar la lista de bodegas
+        $bodegas = Bodega::orderBy('nombre','asc')->get();
+        //Pasar la lista de bodegas
+        if(Auth::user()->hasRole(["owner","admin"])){
+            $bodegas = Bodega::orderBy('nombre','asc')->get();
+            $bodega_selected = "all";
+        }else{
+            $bodegas[] = Auth::user()->bodega;
+            $bodega_selected = Auth::user()->bodega;
+        }
+        //Pasar la lista de marcas (la lista de modelos cargarga usando ajax solo si se ha seleccionado una marca)
+        $marcas = Inventario::groupBy('marca')->get();
+
+        
+        return view("transferencia.add",['bodegas'=>$bodegas,
+                                         'inventario'=>$inventario,
+                                         'bodega_selected'=> $bodega_selected, 
+                                         'marcas' => $marcas]);
+    }    
 
 
 
@@ -74,9 +171,9 @@ class TransferenciaCRUDController extends Controller
         *READ   
     **/
 
-    /**Pagina inicio de las transferencias activas**/
+    /**Pagina inicio de las transferencias  pasadas**/
     
-    public function index(){
+    public function completedList(){
         //Obtener lista de transferencias
         if(Auth::user()->hasRole(["owner","admin"])){
             //Mostrar todas los datos si el usuario es admin o owner
@@ -94,41 +191,16 @@ class TransferenciaCRUDController extends Controller
 
         //Pasar la lista de bodegas
         if(Auth::user()->hasRole(["owner","admin"])){
-            $bodegas = Bodega::orderBy('nombre','asc')->get();            
+            $bodegas = Bodega::orderBy('nombre','asc')->get();
+            $bodega_selected = "all";
         }else{
             $bodegas[] = Auth::user()->bodega;
+            $bodega_selected = Auth::user()->bodega;
         }
-        return view("transferencia.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
+        return view("transferencia.index", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> $bodega_selected]);
     }
 
 
-    /**Pagina inicio de las transferencias especificando una bodega. **/
-    /* Accesible only by role: Admin, Owner */
-    
-    public function indexBodega(Request $request){
-
-        $bodega_id = $request->id; #id passed through ajax call in select_bodega.js
-        
-        if($bodega_id == "all"){
-            //Transferencias de todas las bodegas
-            $transferencias = Transferencia::orderBy('updated_at','desc')->get();   
-        }else{
-            //Transferencias de una bodega en especifico
-            $transferencias = Transferencia::where('bodega_origen','=',$bodega_id)
-                                                    ->orWhere('bodega_destino','=',$bodega_id)
-                                                    ->orderBy('updated_at','desc')
-                                                    ->get();
-        }
-
-        //Pasar la lista de bodegas
-        $bodegas = Bodega::orderBy('nombre','asc')->get();
-
-        //Responder solo si el request es json
-        if ($request->ajax()) {
-            return view("transferencia.index_content", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=>$bodega_id]);
-        }
-        return "Error, la seleccion de bodega solo se puede hacer por medio de json";
-    }
 
 
     /**
@@ -137,14 +209,14 @@ class TransferenciaCRUDController extends Controller
 
     /**View of list of pending transferencias**/
 
-    public function accept_list(){
+    public function acceptList(){
         //Obtener lista de transferencias
         if(Auth::user()->hasRole(["owner","admin"])){
             //Mostrar todas los datos si el usuario es admin o owner
-            $transferencias = Transferencia::where('estatus','=',"A")->groupBy('transferencia_grupo')
+            $transferencias = Transferencia::where('estatus','=',"T")->groupBy('transferencia_grupo')
                                                                      ->get();
         }else{
-            $transferencias = Transferencia::where('estatus','=',"A")
+            $transferencias = Transferencia::where('estatus','=',"T")
                                                     ->where(function($query) {
                                                         $query->where('bodega_origen','=',Auth::user()->bodega->id)
                                                         ->orWhere('bodega_destino','=',Auth::user()->bodega->id);
@@ -156,14 +228,52 @@ class TransferenciaCRUDController extends Controller
 
         //Pasar la lista de bodegas
         if(Auth::user()->hasRole(["owner","admin"])){
-            $bodegas = Bodega::orderBy('nombre','asc')->get();            
+            $bodegas = Bodega::orderBy('nombre','asc')->get();
+            $bodega_selected = "all";         
         }else{
-            $bodegas[] = Auth::user()->bodega;
+            $bodegas[] = Auth::user()->bodega;                        
+            $bodega_selected = Auth::user()->bodega;
         }
 
-        return view("transferencia.accept_list", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> "all"]);
+        return view("transferencia.accept_list", ['transferencias' => $transferencias,'bodegas'=>$bodegas,'bodega_selected'=> $bodega_selected]);
 
     }
+    /**Pagina inicio de las transferencias especificando una bodega. **/
+    /* Accesible only by role: Admin, Owner */
+    
+    public function acceptListBodega(Request $request){
+
+        $bodega_id = $request->id; #id passed through ajax call in select_bodega.js
+        if($bodega_id == "all"){
+            //Transferencias de todas las bodegas
+            $transferencias = Transferencia::orderBy('updated_at','desc')
+                                            ->where('estatus','=',"T")
+                                            ->groupBy('transferencia_grupo')
+                                            ->get();   
+        }else{
+            //Transferencias de una bodega en especifico
+            $transferencias = Transferencia::where('estatus','=',"T")
+                                                    ->where(function($query) use ($bodega_id) {
+                                                        $query->where('bodega_origen','=',$bodega_id)
+                                                        ->orWhere('bodega_destino','=',$bodega_id);
+                                                        })
+                                                    ->orderBy('updated_at','desc')
+                                                    ->groupBy('transferencia_grupo')
+                                                    ->get();
+        }
+
+        //Pasar la lista de bodegas
+        $bodegas = Bodega::orderBy('nombre','asc')->get();
+
+        //Responder solo si el request es json
+        if ($request->ajax()) {
+            return view("transferencia.accept_list_content", ['transferencias' => $transferencias,
+                                                        'bodegas'=>$bodegas,
+                                                        'bodega_selected'=>$bodega_id]);
+        }
+        return "Error, la seleccion de bodega solo se puede hacer por medio de json";
+    }
+
 
 
     /**View of list of pending transferencias**/

@@ -21,10 +21,10 @@
 		<div class="col-lg-2">
 			<center>
 				<div  class="hidden-md hidden-lg">
-					<i class="fa fa-arrow-down text-info" style="font-size:60px;"></i>
+					<i class="fa fa-arrow-down text-warning" style="font-size:60px;"></i>
 				</div>
 				<div class="visible-md visible-lg">
-					<i class="fa fa-arrow-right text-info" style="font-size:60px;"></i>
+					<i class="fa fa-arrow-right text-warning" style="font-size:60px;"></i>
 				</div>
 			</center>
 		</div>	
